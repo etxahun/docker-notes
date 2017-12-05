@@ -6,7 +6,7 @@ My very own Docker notes.
 **[Instalación](#Instalación)**<br>
 
 
-## Introducción
+# Introducción
 
 * **Image:** An _image_ is a lightweight, stand-alone, executable package that includes everything needed to run a piece of software, including the code, a runtime, libraries, environment variables, and config files.
 
@@ -21,11 +21,11 @@ My very own Docker notes.
 
   * Containers can get native access, each one running in a discrete process, taking no more memory than any other executable.
 
-## Instalación
+# Instalación
 
 Cuando hablamos de "instalar docker" nos estamos refiriendo a instalar "Docker Engine". Para ello, lo haremos siguiendo los pasos indicados en la [Documentación Oficial](https://docs.docker.com/engine/installation/).
 
-## Containers
+# Containers
 A continuación se muestran los comandos más habituales con "containers":
 
 ### `ps`
