@@ -12,13 +12,9 @@ My very own Docker notes.
 
 * **Container:**
   * A _container_ is a runtime instance of an image—what the image becomes in memory when actually executed.
-
   * It runs completely isolated from the host environment by default, only accessing host files and ports if configured to do so.
-
   * Containers **run apps natively** on the host machine’s kernel.
-
   * They have _better performance_ characteristics than virtual machines that only get virtual access to host resources through a hypervisor.
-
   * Containers can get native access, each one running in a discrete process, taking no more memory than any other executable.
 
 # Instalación
@@ -133,7 +129,7 @@ $ docker attach
 $ docker exec
 ```
 
-## Images
+# Images
 
 * Ver listado de imagenes:
 ```shell
@@ -145,7 +141,7 @@ $ docker images
 $ docker images -a
 ```
 
-## Limpieza
+# Limpieza
 * Borrar container:
 ```shell
 $ docker rm <container_ID>
