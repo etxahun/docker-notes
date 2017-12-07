@@ -42,6 +42,19 @@ $ docker ps -a
 $ docker ps -l -q
 ```
 
+### `exec`
+Para acceder a la shell de un "container" que tuvieramos previamente arrancado:
+
+Indicando su ID:
+```shell
+$ sudo docker exec -i -t 665b4a1e17b6 /bin/bash
+```
+
+o sino también a través de su nombre:
+```shell
+$ sudo docker exec -i -t loving_heisenberg /bin/bash
+```
+
 ### `run`
 Crea y arranca un "container".
 Por defecto un contenedor se arranca, ejecuta el comando que le digamos y se para:
@@ -51,16 +64,17 @@ $ docker run busybox echo hello world
 
 Podemos pasarle varias opciones al comando `run`, como por ejemplo:
 
-* `run` interactivo:
+* `run` **interactivo**:
 ```shell
 $ docker run -t -i ubuntu:16.04 /bin/bash
 ```
-  * **-t:** Asigna una tty
+  * **-h:** Le configuramos un hostname al "container".
+  * **-t:** Asigna una TTY.
   * **-i:** Nos comunicamos con el "container" de manera interactiva.
 
   **Nota:** Al salir del modo interactivo (-i) el "container" se detendrá.
 
-* `run` Detached Mode:
+* `run` **Detached Mode**:
 
   Como ya sabemos, trás correr un contenedor de manera interactiva, este finaliza. Si se quieren hacer contenedores que corran servicios (por ejemplo, un servidor web) el comando es el siguiente:
   ```shell
@@ -89,45 +103,41 @@ $ docker inspect
 $ docker  inspect --format '{{ .NetworkSettings.IPAddress }}' <nombre_container>
 ```
 
+### `logs`
 * Mostrar logs sobre un container:
 ```shell
 $ docker logs
 ```
 
-* Procesos corriendo en el container:
-```shell
-$ docker top
-```
+### `stats`
 
 * Estadísticas del container (CPU,MEM,etc.):
 ```shell
 $ docker stats
 ```
 
-* Crear container pero no lo arranca:
+## Ports in Containers
+* Puertos publicos del container:                                        
 ```shell
-$ docker create
+$ docker port
+```
+* Publicar puerto 80 del container en un puerto random del Host:
+```shell
+$ docker run -p 80 nginx
+```
+* Publicar puerto 80 del container en el puerto 8080 del Host:
+```shell
+$ docker run -p 8080:80 nginx
+```
+* Publicar todos los puerto expuestos del container en puertos random del Host:
+```shell
+$ docker run -P nginx
+```
+* Listar todos los mapeos de los puertos de un container:
+```shell
+$ docker port <container_name>
 ```
 
-
-* Arrancar/Parar/Reiniciar container:
-```shell
-$ docker start/stop/restart
-```
-* Borrar container:
-```shell
-$ docker rm
-```
-
-* Conectarse a un container:
-```shell
-$ docker attach
-```
-
-* Ejecutar un comando en el container:
-```shell
-$ docker exec
-```
 
 # Images
 
