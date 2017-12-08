@@ -8,7 +8,7 @@ My very own Docker notes.
 **[Ports in Containers](#ports-in-containers)**<br>
 **[Images](#images)**<br>
 **[Limpieza](#limpieza)**<br>
-**[Ciclo de vida de un contenedor (Create/Start/Stop/Kill/RM)](#ciclo-de-vida-de-un-contenedor-(Create/Start/Stop/Kill/RM))**<br>
+**[Ciclo de vida de un contenedor (Create/Start/Stop/Kill/RM)](#ciclo-de-vida-de-un-contenedor-(create/start/stop/kill/rm))**<br>
 **[Dockerfiles](#dockerfiles)**<br>
 **[Volumenes](#volumenes)**<br>
 **[Networking](#networking)**<br>
