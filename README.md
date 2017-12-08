@@ -159,7 +159,7 @@ $ docker images
 $ docker images -a
 ```
 
-  ## Crear nuestras propias Images:
+  ### Crear nuestras propias Images:
 
   Después de crear varios contenedores, tal vez queremos crear nuestras propias imágenes.
 
