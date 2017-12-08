@@ -2,8 +2,15 @@
 My very own Docker notes.
 
 ### Table of Contents
-**[Introducción](#Introducción)**<br>
-**[Instalación](#Instalación)**<br>
+**[Introducción](#introducción)**<br>
+**[Instalación](#instalación)**<br>
+**[Containers](#containers)**<br>
+**[Ports in Containers](#ports-in-containers)**<br>
+**[Images](#images)**<br>
+**[Limpieza](#limpieza)**<br>
+**[Dockerfiles](#dockerfiles)**<br>
+**[Volumenes](#volumenes)**<br>
+**[Networking](#networking)**<br>
 
 
 # Introducción
