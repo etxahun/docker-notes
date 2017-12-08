@@ -124,7 +124,7 @@ $ docker logs
 $ docker stats
 ```
 
-## Ports in Containers
+### Ports in Containers
 * Puertos publicos del container:                                        
 ```shell
 $ docker port
@@ -251,7 +251,7 @@ $ docker ps
   a842945e2414 python:2.7 "python -m SimpleHTT ... fervent_hodgkin
 ```
 
-## Detener Containers:
+### Detener Containers:
 
 Siguiendo el ejemplo, para **detener** el contenedor se puede ejecutar cualquiera de los siguientes comandos `kill` ó `stop`:
 ```shell
@@ -259,7 +259,7 @@ $ docker kill a842945e2414 (envía SIGKILL)
 $ docker stop a842945e2414 (envía SIGTERM).
 ```
 
-Asimismo, pueden reiniciarse (hace un `docker stop a842945e2414` y luego un `docker start a842945e2414`):
+Asimismo, pueden reiniciarse (hacer un `docker stop a842945e2414` y luego un `docker start a842945e2414`):
 
 ```shell
 $ docker restart a842945e2414
@@ -273,6 +273,6 @@ $ docker rm a842945e2414
 
 # Dockerfiles
 
-# Volumenes
+# Volúmenes
 
 # Networking
