@@ -10,8 +10,9 @@ My very own Docker notes.
 **[Limpieza](#limpieza)**<br>
 **[Ciclo de vida de un contenedor (Create/Start/Stop/Kill/RM)](#ciclo-de-vida-de-un-contenedor-createstartstopkillrm)**<br>
 **[Dockerfiles](#dockerfiles)**<br>
-**[Volumenes](#volumenes)**<br>
+**[Volumes](#volumes)**<br>
 **[Networking](#networking)**<br>
+**[Compose: Linkar Containers](#compose-linkar-containers)**<br>
 
 
 # Introducción
@@ -363,7 +364,7 @@ $ docker rm a842945e2414
 
 # Dockerfiles
 
-# Volúmenes
+# Volumes
 
 # Networking
 
