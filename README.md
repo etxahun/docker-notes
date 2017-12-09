@@ -227,50 +227,6 @@ $ docker history <image_name>
   $ docker build myimage -t "myfirstimage:latest"
   ```
 
-  ### Ejemplo Completo:
-
-  Después de crear varios contenedores, tal vez queremos crear nuestras propias imágenes.
-
-  Cuando arrancamos un contenedor, este se inicia desde una imagen base. Una vez con el contenedor en ejecución nosotros podríamos querer hacerle cambios, como por ejemplo, instalarle ciertas librerías o dependencias (ejemplo, correr `apt install htop vim git` dentro de un contenedor que tiene de imagen base, Ubuntu). Una vez ejecutado este comando, el contenedor ha modificado su *filesystem*. Si nuestra idea es querer ejecutar en un futuro contenedores iguales al anterior, tendremos que crear una *imagen* de este. Docker nos provee del comando *commit* para, a partir de un contenedor, crear una imagen. Docker mantiene las diferencias entre la imagen base y la que se quiere crear, creando una nueva layer usando **UnionFS**. Similar a **GIT**.
-
-  1. Crearemos un contenedor de Ubuntu, y al mismo le actualizaremos la lista de repositorios.
-```shell
-$ docker run -t -i --name=contenedorPrueba ubuntu:14.04 /bin/bash
-root@69079aaaaab1:/# apt update
-```
-
-    Cuando salgamos de este contenedor, se detendrá, pero seguirá estando disponibles a menos que lo eliminemos explícitamente con `docker rm`.
-
-  2. A continuación haremos un `docker commit`, para definir la nueva imagen para mantener una imagen mas actualizada.
-```shell
-$ docker commit contenedorPrueba ubuntu:update
-13132d42da3cc40e8d8b4601a7e2f4dbf198e9d72e37e19ee1986c280ffcb97c
-$ docker images
-REPOSITORY    TAG     IMAGE ID      CREATED          VIRTUAL SIZE
-ubuntu        update  13132d42da3c  5 days ago  ...  213 MB
-```
-  **NOTA:** Esto `ubuntu:update` especifica ``<nombre_imagen>:<tag_del_commit>`.
-
-  Luego ya podremos lanzar contenedores basados en la nueva imagen `ubuntu:update`.
-
-  ### Adicional
-
-  Podemos chequear las diferencias con `docker diff`:
-  ```shell
-  $ docker diff contenedorPrueba
-  C /root
-  A /root/.bash_history
-  C /tmp
-  C /var
-  C /var/cache
-  C /var/cache/apt
-  D /var/cache/apt/pkgcache.bin
-  D /var/cache/apt/srcpkgcache.bin
-  C /var/lib
-  C /var/lib/apt
-  C /var/lib/apt/lists
-  ```
-
 # Limpieza
 ### Containers:
 * Borrar container:
