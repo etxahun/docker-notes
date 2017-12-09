@@ -2,17 +2,17 @@
 Mis notas sobre Docker.
 
 # Table of Contents
-**[Introducción](#introducción)**<br>
-**[Instalación](#instalación)**<br>
-**[Containers](#containers)**<br>
-**[Ports in Containers](#ports-in-containers)**<br>
-**[Images](#images)**<br>
-**[Limpieza](#limpieza)**<br>
-**[Ciclo de vida de un contenedor (Create/Start/Stop/Kill/RM)](#ciclo-de-vida-de-un-contenedor-createstartstopkillrm)**<br>
-**[Dockerfiles](#dockerfiles)**<br>
-**[Volumes](#volumes)**<br>
-**[Networking](#networking)**<br>
-**[Compose: Linkar Containers](#compose-linkar-containers)**<br>
+**[Introducción](#introducción)**
+**[Instalación](#instalación)**
+**[Containers](#containers)**
+**[Ports in Containers](#ports-in-containers)**
+**[Images](#images)**
+**[Limpieza](#limpieza)**
+**[Ciclo de vida de un contenedor (Create/Start/Stop/Kill/RM)](#ciclo-de-vida-de-un-contenedor-createstartstopkillrm)**
+**[Dockerfiles](#dockerfiles)**
+**[Volumes](#volumes)**
+**[Networking](#networking)**
+**[Compose: Linkar Containers](#compose-linkar-containers)**
 
 
 # Introducción
