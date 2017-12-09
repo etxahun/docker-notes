@@ -5,9 +5,13 @@ Mis notas sobre Docker.
 * **[Introducción](#introducción)**
 * **[Instalación](#instalación)**
 * **[Containers](#containers)**
-* **[Ports in Containers](#ports-in-containers)**
+  * **[Ports in Containers](#ports-in-containers)**
 * **[Images](#images)**
+  * **[Crear nuestras propias imágenes](#crear-nuestras-propias-imagenes)**
 * **[Limpieza](#limpieza)**
+  * **[Containers](#containers)**
+  * **[Images](#images)**
+  * **[Volumes](#volumes)**
 * **[Ciclo de vida de un contenedor (Create/Start/Stop/Kill/RM)](#ciclo-de-vida-de-un-contenedor-createstartstopkillrm)**
 * **[Dockerfiles](#dockerfiles)**
 * **[Volumes](#volumes)**
