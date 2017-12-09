@@ -173,7 +173,7 @@ $ docker history <image_name>
 
   ### Crear nuestras propias Images:
 
-  Podemos crear imágenes diferentes maneras:
+  Podemos crear nuestras propias imágenes de diferentes maneras:
 
   A) `docker commit`: build an image from a container.
 
