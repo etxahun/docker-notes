@@ -96,7 +96,8 @@ $ docker run -t -i ubuntu:16.04 /bin/bash
     $ docker exec -ti <container-id> /bin/bash
     ```
 
-      * Aquí simplemente se abre una **tty** en modo **interativo**. Podrían hacerse otras cosas como cambiar el _working directory_, definir variables de entorno, etc. La lista completa puede verse acá
+      * Aquí simplemente se abre una **tty** en modo **interativo**. Podrían hacerse otras cosas como cambiar el _working directory_, definir variables de entorno, etc.
+
 
 ### `inspect`
 Muestra detalles acerca de un contenedor:
@@ -159,7 +160,73 @@ $ docker images
 $ docker images -a
 ```
 
+* Borrar una imágen:
+```shell
+$ docker rmi <images_name>
+```
+
+* Para conocer el historial y "layers" que tiene una imagen:
+```shell
+$ docker history <image_name>
+```
+
   ### Crear nuestras propias Images:
+
+  Podemos crear imágenes diferentes maneras:
+
+  A) `docker commit`: build an image from a container.
+
+  Ejemplo:
+  ```shell
+   $ docker commit -m "Mensaje que queramos" -a "Nombre del que lo ha hecho" container-id NEW_NAME:TAG
+   $ docker commit -m "MongoDB y Scrapy instalados" -a "Etxahun" 79869875807 etxahun/scrapy_mongodb:0.1
+   ```
+  B) `docker build`: create an image from a "Dockerfile" by executing the build steps given in the file.
+
+  Dentro de un Dockerfile las "instructions" que podemos utilizar son las siguientes:
+
+   * **FROM**: the base image for building the new docker image; provide "FROM scratch" if it is a base image itself.
+   * **MAINTAINER**: the author of the Dockerfile and the email.
+   * **RUN**: any OS command to build the image.
+   * **CMD**: specify the command to be stated when the container is run; can be overriden by the explicit argument when providing docker run command.
+   * **ADD**: copies files or directories from the host to the container in the given path.
+   * **EXPOSE**: exposes the specified port to the host machine.
+
+
+  Ejemplo:
+  ```shell
+  $ nano myimage/Dockerfile
+
+  FROM ubuntu
+  RUN echo "my first image" > /tmp/first.txt
+
+  $ docker build -f myimage/Dockerfile   || o sino ||   docker build myimage
+  Sending build context to Doker daemon 2.048 kB
+  Step 1: FROM ubuntu
+  ----> ac526a456ca4
+  Step 2: RUN echo "my first image" > /temp/first.txt
+  ----> Running in 18f62f47d2c8
+  ----> 777f9424d24d
+  Removing intermediate container 18f62f47d2c8
+  Succesfully built 777f9424d24d
+
+  $ docker images | grep 777f9424d24d
+
+  <none>	<none>		777f9424d24d		4 minutes ago		125.2 MB
+
+  $ docker run -it 777f9424d24d
+  $ root@2dcd9d0caf6f:/#
+  ```
+  Podemos ponerle un nombre o "tagear" la imagen en el momento que estemos haciendo el "build":
+  ```shell
+  $ docker build <dirname> -t "<imagename>:<tagname>"
+  ```
+  Ejemplo:
+  ```shell
+  $ docker build myimage -t "myfirstimage:latest"
+  ```
+
+  ### Ejemplo Completo:
 
   Después de crear varios contenedores, tal vez queremos crear nuestras propias imágenes.
 
@@ -204,9 +271,15 @@ ubuntu        update  13132d42da3c  5 days ago  ...  213 MB
   ```
 
 # Limpieza
+### Containers:
 * Borrar container:
 ```shell
 $ docker rm <container_ID>
+```
+
+* Borrar container y sus volumenes asociados:
+```shell
+$ docker rm -v <container_ID>
 ```
 
 * Borrar TODOS los containers:
@@ -214,6 +287,7 @@ $ docker rm <container_ID>
 $ docker rm $(docker ps -a -q)
 ```
 
+### Images:
 * Borrar imágenes:
 ```shell
 $ docker rmi <container_ID>
@@ -223,6 +297,22 @@ $ docker rmi <container_ID>
 ```shell
 $ docker rmi $(docker images -q)
 ```
+* Listar imágenes <none> "colgadas":
+```shell
+$ docker images -f "dangling=true"
+```
+
+* Borrar imágenes <none> "colgadas":
+```shell
+$ docker rmi $(docker images -f "dangling=true" -q)
+```
+
+### Volumes:
+* Borrar TODOS los "volume" que no se estén utilizando:
+```shell
+$ docker volume rm $(docker volumels -q)
+```
+
 
 # Ciclo de vida de un contenedor (Create/Start/Stop/Kill/RM)
 
@@ -276,3 +366,32 @@ $ docker rm a842945e2414
 # Volúmenes
 
 # Networking
+
+# Compose: Linkar containers
+
+Cuando queramos "linkar" dos o más contenedores tendremos que establecer su relación en un fichero YAML. A continuación se muestra un ejemplo de un fichero que "linka" un container "Web" (Wordpress) y uno de base de datos "MySQL":
+
+* Contenido del fichero **ejemplo.yml**:
+
+  ```YAML
+  web:
+     image: wordpress
+     links:
+       - mysql
+     environment:
+       - WORDPRESS_DB_PASSWORD=sample
+     ports:
+       - "127.0.0.3:8080:80"
+  mysql:
+  image: mysql:latest
+  environment:
+     - MYSQL_ROOT_PASSWORD=sample
+     - MYSQL_DATABASE=wordpress
+
+  ```
+  Y para ejecutarlo, estando en el mismo directorio donde está el fichero **ejemplo.yml**, haremos lo siguiente:
+
+  ```shell
+  $ docker-compose up
+  ```
+  Y para comprobar que todo ha ido bien, abriremos la url http://127.0.0.3:8080 para aceder a la página de Wordpress.
