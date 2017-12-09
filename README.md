@@ -1,7 +1,7 @@
 # docker-notes
-My very own Docker notes.
+Mis notas sobre Docker.
 
-### Table of Contents
+# Table of Contents
 **[Introducción](#introducción)**<br>
 **[Instalación](#instalación)**<br>
 **[Containers](#containers)**<br>
