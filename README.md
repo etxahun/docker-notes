@@ -20,7 +20,7 @@ Mis notas sobre Docker.
   * **[Run the App](#run-the-app)**
 * **[Volumes](#volumes)**
 * **[Networking](#networking)**
-* **[Compose: Linkar Containers](#compose-linkar-containers)**
+* **[Compose: Linkar Containers](#docker-compose-linkar-containers)**
 * **[Docker CheatSheet](#docker-cheatsheet)**
 
 
@@ -498,7 +498,11 @@ Hemos utilizado la opción "-d" para arrancarlo en "detached mode".
 
 # Networking
 
-# Compose: Linkar containers
+# Docker Compose: Linkar containers
+
+Cuando estamos diseñando una "aplicación distribuida", a cada una de las piezas se le conoce como "service". Por ejemplo, si pensamos en una aplicación de "Video Sharing site", tendremos que tener por un lado un servicio que nos permita almacenar en una base de datos tod el contenido multimedia, por otra parte tendremos un servicio para realizar el "transcoding" en background cada vez que un usuario suba un vídeo, tambien tendremos un servicio para la parte front-end, etc.
+
+Llamamos "services" a los "containers" que pongamos en producción. Un servicio se compone de una sola imagen, con todo lo necesario para que ésta proporcione la funciones para lo que ha sido creada. En Docker, la manera en que definiremos dichas "images" es con "Docker Compose", escribiendo lo que se conocen como ficheros **docker-compose.yml**.
 
 Cuando queramos "linkar" dos o más contenedores tendremos que establecer su relación en un fichero YAML. A continuación se muestra un ejemplo de un fichero que "linka" un container "Web" (Wordpress) y uno de base de datos "MySQL":
 
