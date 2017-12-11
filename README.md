@@ -19,7 +19,7 @@ Mis notas sobre Docker.
   * **[Build del Dockerfile](#build-del-dockerfile)**
   * **[Run the App](#run-the-app)**
 * **[Volumes](#volumes)**
-* **[Networking](#networking)**
+* **[Network Containers](#network-containers)**
 * **[Compose: Linkar Containers](#docker-compose-linkar-containers)**
 * **[Docker CheatSheet](#docker-cheatsheet)**
 
@@ -496,7 +496,153 @@ Hemos utilizado la opción "-d" para arrancarlo en "detached mode".
 
 # Volumes
 
-# Networking
+# Network Containers
+
+Docker permite realizar "containers networking" gracias al uso de sus **network drivers**. Por defecto, Docker proporciona dos **drivers**: `bridge` y `overlay`.
+
+Toda instalacion de **Docker Engine** automáticamente incluye las siguientes tres redes:
+
+```shell
+$ docker network ls
+
+NETWORK ID          NAME                DRIVER
+18a2866682b8        none                null
+c288470c46f6        host                host
+7b369448dccb        bridge              bridge
+```
+* **Bridge:** Es una red especial. A menos que especifiquemos lo contrario, Docker siempre arrancará los containers en ésta red. Podemos probar a hacer lo siguiente:
+```shell
+$ docker run -itd --name=networktest ubuntu
+
+74695c9cea6d9810718fddadc01a727a5dd3ce6a69d09752239736c030599741
+```
+Para comprobar la IP del container, haremos lo siguiente:
+
+```shell
+$ docker network inspect bridge
+
+[
+    {
+        "Name": "bridge",
+        "Id": "f7ab26d71dbd6f557852c7156ae0574bbf62c42f539b50c8ebde0f728a253b6f",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.17.0.1/16",
+                    "Gateway": "172.17.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Containers": {
+            "3386a527aa08b37ea9232cbcace2d2458d49f44bb05a6b775fba7ddd40d8f92c": {
+                "Name": "networktest",
+                "EndpointID": "647c12443e91faf0fd508b6edfe59c30b642abb60dfab890b4bdccee38750bc1",
+                "MacAddress": "02:42:ac:11:00:02",
+                "IPv4Address": "172.17.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {
+            "com.docker.network.bridge.default_bridge": "true",
+            "com.docker.network.bridge.enable_icc": "true",
+            "com.docker.network.bridge.enable_ip_masquerade": "true",
+            "com.docker.network.bridge.host_binding_ipv4": "0.0.0.0",
+            "com.docker.network.bridge.name": "docker0",
+            "com.docker.network.driver.mtu": "9001"
+        },
+        "Labels": {}
+    }
+]
+```
+
+Para desconectar un container de una red tendremos que indicar la red en la que está conectada así como el nombre del container:
+
+```shell
+$ docker network disconnect bridge networktest
+```
+
+**Importante:** Networks are natural ways to isolate containers from other containers or other networks.
+
+### Crear nuestro propio "Bridge Network"
+
+Como ya hemos comentado, **Docker Engine** soporta dos tipos de redes: *bridge* y *overlay*:
+
+* **Bridge:** se limita a un "single host" donde esté funcionando "Docker Engine".
+* **Overlay:** puede incluir múltimples hosts con "Docker Engine" instalado.
+
+A continuación crearemos un "bridge network":
+
+```shell
+$ docker network create -d bridge my_bridge
+```
+
+El flag "-d" indica a Docker que tiene que cargar el driver de red "bridge". Es opcional ya que Docker por defecto carga "bridge".
+
+Si volvemos a listar los drivers de red, veremos el que acabamos de crear:
+
+```shell
+$ docker network ls
+
+NETWORK ID          NAME                DRIVER
+7b369448dccb        bridge              bridge
+615d565d498c        my_bridge           bridge
+18a2866682b8        none                null
+c288470c46f6        host                host
+```
+
+Y si hacemos un "inspect" de la red veremos que no tiene ninguna información:
+
+```shell
+$ docker network inspect my_bridge
+
+[
+    {
+        "Name": "my_bridge",
+        "Id": "5a8afc6364bccb199540e133e63adb76a557906dd9ff82b94183fc48c40857ac",
+        "Scope": "local",
+        "Driver": "bridge",
+        "IPAM": {
+            "Driver": "default",
+            "Config": [
+                {
+                    "Subnet": "10.0.0.0/24",
+                    "Gateway": "10.0.0.1"
+                }
+            ]
+        },
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+```
+
+#### Add Containers to a networks
+
+Cuando construyamos aplicaciones Web que deban funcionar de manera conjunta, por seguridad, crearemos una red. Las redes, por definicion, proporcionan una aislamiento completo a los containers. Cuando vayamos a arrancar un container podremos agregarlo a una red.
+
+En el siguiente ejemplo arrancaremos un container de base de datos PostgreSQL pasándole el flag "--net=my_bridge":
+
+```shell
+$ docker run -d --net=my_bridge --name db training/postgres
+```
+
+Si ahora realizamos un "inspect" de la red "my_bridge" veremos que tiene un container asociado. También podemos inspeccionar el container para ver a qué red está conectado:
+
+```shell
+$ docker inspect --format='{{json .NetworkSettings.Networks}}'  db
+
+{"my_bridge":{"NetworkID":"7d86d31b1478e7cca9ebed7e73aa0fdeec46c5ca29497431d3007d2d9e15ed99",
+"EndpointID":"508b170d56b2ac9e4ef86694b0a76a22dd3df1983404f7321da5649645bf7043","Gateway":"10.0.0.1","IPAddress":"10.0.0.254","IPPrefixLen":24,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"MacAddress":"02:42:ac:11:00:02"}}
+```
+
+
 
 # Docker Compose: Linkar containers
 
