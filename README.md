@@ -531,7 +531,7 @@ Cuando queramos "linkar" dos o más contenedores tendremos que establecer su rel
 
 A continuación se muestra un listado con los comandos básicos de Docker:
 
-```shell
+```text
 docker build -t friendlyname .                        # Create image using this directory's Dockerfile
 docker run -p 4000:80 friendlyname                    # Run "friendlyname" mapping port 4000 to 80
 docker run -d -p 4000:80 friendlyname                 # Same thing, but in detached mode
