@@ -22,6 +22,8 @@ Mis notas sobre Docker.
 * **[Networking](#networking)**
 * **[Compose: Linkar Containers](#compose-linkar-containers)**
 
+* **[Docker CheatSheet](#docker-cheatsheet)**
+
 
 # Introducción
 
@@ -77,6 +79,11 @@ Crea y arranca un "container".
 Por defecto un contenedor se arranca, ejecuta el comando que le digamos y se para:
 ```shell
 $ docker run busybox echo hello world
+```
+
+Por lo general `docker run` tiene la siguiente estructura:
+```shell
+$ docker run -p <puerto_host>:<puerto_container> username/repository:tag
 ```
 
 Podemos pasarle varias opciones al comando `run`, como por ejemplo:
@@ -234,6 +241,43 @@ $ docker history <image_name>
   ```shell
   $ docker build myimage -t "myfirstimage:latest"
   ```
+### Tag the image
+
+La notación que se suele utilizar para asociar una imagen local con un "repository" dentro de un "registry" es la siguiente: `username/repository:tag`. La parte "tag" es opcional, pero recomendable, ya que es la manera en que versionaremos en Docker las imágenes.
+
+Para realizar el "tag" haremos lo siguiente:
+
+```shell
+$ docker tag image username/repository:tag
+```
+
+Por ejemplo:
+
+```shell
+docker tag friendlyhello john/get-started:part2
+```
+
+Para comprobar la imagen que acabamos de "tagear":
+
+```shell
+$ docker images_name
+
+REPOSITORY               TAG                 IMAGE ID            CREATED             SIZE
+friendlyhello            latest              d9e555c53008        3 minutes ago       195MB
+john/get-started         part2               d9e555c53008        3 minutes ago       195MB
+python                   2.7-slim            1c7128a655f6        5 days ago          183MB
+...
+```
+
+### Publish the image
+
+Para publicar la imagen haremos lo siguiente:
+```shell
+$ docker push username/repository:tagear
+```
+
+Una vez subido, podremos ver en la Web de [Docker Hub](https://hub.docker.com/ "Docker Hub").
+
 
 # Limpieza
 ### Containers:
@@ -483,3 +527,26 @@ Cuando queramos "linkar" dos o más contenedores tendremos que establecer su rel
   $ docker-compose up
   ```
   Y para comprobar que todo ha ido bien, abriremos la url http://127.0.0.3:8080 para aceder a la página de Wordpress.
+
+# Docker CheatSheet
+
+A continuación se muestra un listado con los comandos básicos de Docker:
+
+```shell
+docker build -t friendlyname .                        # Create image using this directory's Dockerfile
+docker run -p 4000:80 friendlyname                    # Run "friendlyname" mapping port 4000 to 80
+docker run -d -p 4000:80 friendlyname                 # Same thing, but in detached mode
+docker container ls                                   # List all running containers
+docker container ls -a                                # List all containers, even those not running
+docker container stop <hash>                          # Gracefully stop the specified container
+docker container kill <hash>                          # Force shutdown of the specified container
+docker container rm <hash>                            # Remove specified container from this machine
+docker container rm $(docker container ls -a -q)      # Remove all containers
+docker image ls -a                                    # List all images on this machine
+docker image rm <image id>                            # Remove specified image from this machine
+docker image rm $(docker image ls -a -q)              # Remove all images from this machine
+docker login                                          # Log in this CLI session using your Docker credentials
+docker tag <image> username/repository:tag            # Tag <image> for upload to registry
+docker push username/repository:tag                   # Upload tagged image to registry
+docker run username/repository:tag                   # Run image from a registry
+```
