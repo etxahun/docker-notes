@@ -20,6 +20,8 @@ Mis notas sobre Docker.
   * **[Run the App](#run-the-app)**
 * **[Volumes](#volumes)**
 * **[Network Containers](#network-containers)**
+  * **[Crear nuestro propio "Bridge Network"](#crear-nuestro-propio-bridge-network)**
+  * **[Add Containers to a Network](#add-container-to-a-network)**
 * **[Compose: Linkar Containers](#docker-compose-linkar-containers)**
 * **[Docker CheatSheet](#docker-cheatsheet)**
 
@@ -623,7 +625,7 @@ $ docker network inspect my_bridge
 ]
 ```
 
-#### Add Containers to a networks
+#### Add Containers to a Network
 
 Cuando construyamos aplicaciones Web que deban funcionar de manera conjunta, por seguridad, crearemos una red. Las redes, por definicion, proporcionan una aislamiento completo a los containers. Cuando vayamos a arrancar un container podremos agregarlo a una red.
 
