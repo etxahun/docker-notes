@@ -518,6 +518,8 @@ $ docker run -itd --name=networktest ubuntu
 
 74695c9cea6d9810718fddadc01a727a5dd3ce6a69d09752239736c030599741
 ```
+![Network Bridge](images/bridge1.png)
+
 Para comprobar la IP del container, haremos lo siguiente:
 
 ```shell
