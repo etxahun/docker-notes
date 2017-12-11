@@ -14,6 +14,10 @@ Mis notas sobre Docker.
   * **[Volumes](#volumes)**
 * **[Ciclo de vida de un contenedor (Create/Start/Stop/Kill/Remove)](#ciclo-de-vida-de-un-contenedor-createstartstopkillremove)**
 * **[Dockerfiles](#dockerfiles)**
+  * **[Cómo Empezar](#cómo-empezar)**
+  * **[La Aplicación](#la-aplicación)**
+  * **[Build del Dockerfile](#build-del-dockerfile)**
+  * **[Run the App](#run-the-app)**
 * **[Volumes](#volumes)**
 * **[Networking](#networking)**
 * **[Compose: Linkar Containers](#compose-linkar-containers)**
