@@ -21,7 +21,6 @@ Mis notas sobre Docker.
 * **[Volumes](#volumes)**
 * **[Networking](#networking)**
 * **[Compose: Linkar Containers](#compose-linkar-containers)**
-
 * **[Docker CheatSheet](#docker-cheatsheet)**
 
 
@@ -548,5 +547,5 @@ docker image rm $(docker image ls -a -q)              # Remove all images from t
 docker login                                          # Log in this CLI session using your Docker credentials
 docker tag <image> username/repository:tag            # Tag <image> for upload to registry
 docker push username/repository:tag                   # Upload tagged image to registry
-docker run username/repository:tag                   # Run image from a registry
+docker run username/repository:tag                    # Run image from a registry
 ```
