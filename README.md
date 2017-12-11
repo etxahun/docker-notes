@@ -529,7 +529,7 @@ Cuando queramos "linkar" dos o más contenedores tendremos que establecer su rel
 
 # Docker CheatSheet
 
-A continuación se muestra un listado con los `comandos básicos` de Docker:
+A continuación se muestra un listado con los *comandos básicos* de Docker:
 
 ```shell
 docker build -t friendlyname .                   # Create image using this directory's Dockerfile
