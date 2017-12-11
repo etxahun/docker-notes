@@ -51,10 +51,21 @@ Docker Engine is a *client-server* application with these major components:
 
 * **Container:**
   * A _container_ is a runtime instance of an image—what the image becomes in memory when actually executed.
-  * It *runs completely isolated* from the host environment by default, only accessing host files and ports if configured to do so.
+  * It **runs completely isolated** from the host environment by default, only accessing host files and ports if configured to do so.
   * Containers **run apps natively** on the host machine’s kernel.
-  * They have _better performance_ characteristics than virtual machines that only get virtual access to host resources through a hypervisor.
+  * They have **better performance** characteristics than virtual machines that only get virtual access to host resources through a hypervisor.
   * Containers can get native access, each one running in a discrete process, taking no more memory than any other executable.
+
+### Docker Architecture
+
+As previously mentioned, Docker uses a **client-server** architecture.
+* The **Docker client** talks to the **Docker daemon**, which does the heavy lifting of building, running, and distributing your Docker containers.
+* The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon.
+* The Docker client and daemon communicate using a **REST API**, over UNIX sockets or a network interface.
+
+<p align="center">
+  <img src="images/architecture.svg">
+</p>
 
 # Instalación
 
