@@ -648,6 +648,15 @@ $ docker inspect --format='{{json .NetworkSettings.Networks}}'  db
 "EndpointID":"508b170d56b2ac9e4ef86694b0a76a22dd3df1983404f7321da5649645bf7043","Gateway":"10.0.0.1","IPAddress":"10.0.0.254","IPPrefixLen":24,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"MacAddress":"02:42:ac:11:00:02"}}
 ```
 
+Si ahora arrancamos la imagen Web veremos que la red está de la siguiente manera:
+
+```shell
+$ docker run -d --name web training/webapp python app.py
+```
+
+<p align="center">
+  <img src="images/bridge2.png">
+</p>
 
 
 # Docker Compose: Linkar containers
