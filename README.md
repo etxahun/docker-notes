@@ -28,6 +28,25 @@ Mis notas sobre Docker.
 
 # Introducción
 
+* **What is Docker?**
+
+Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly.
+
+### Docker Engine
+
+Docker Engine is a *client-server* application with these major components:
+
+* A server which is a type of long-running program called a daemon process (the dockerd command).
+
+* A REST API which specifies interfaces that programs can use to talk to the daemon and instruct it what to do.
+
+* A command line interface (CLI) client (the docker command).
+
+<p align="center">
+  <img src="images/engine-components-flow.png">
+</p>
+
+
 * **Image:** An _image_ is a lightweight, stand-alone, executable package that includes everything needed to run a piece of software, including the code, a runtime, libraries, environment variables, and config files.
 
 * **Container:**
