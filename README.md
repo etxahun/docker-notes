@@ -728,7 +728,7 @@ Unlike a `bind mount`, you can create and manage volumes outside the scope of an
   local               my-vol
   ```
 
-  **Inspect a volume:**
+  * **Inspect a volume:**
 
   ```shell
     $ docker volume inspect my-vol
@@ -744,13 +744,13 @@ Unlike a `bind mount`, you can create and manage volumes outside the scope of an
     ]
   ```
 
-  **Remove a volume:**
+  * **Remove a volume:**
 
     ```shell
     $ docker volume rm my-vol
     ```
 
-  **Start a container with a volume:**
+  * **Start a container with a volume:**
 
     If you start a container with a volume that does not yet exist, Docker creates the volume for you. The following example mounts the volume `myvol2` into `/app/` in the container.
 
