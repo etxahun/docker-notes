@@ -714,13 +714,13 @@ Differences between `-v (--volumen)` and `--mount`:
 
 Unlike a `bind mount`, you can create and manage volumes outside the scope of any container:
 
-  **Create a volume:**
+  * **Create a volume:**
 
   ```shell
   $ docker volume create my-vol
   ```
 
-  **List volumes:**
+  * **List volumes:**
 
   ```shell
   $ docker volume ls
