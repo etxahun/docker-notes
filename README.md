@@ -578,6 +578,9 @@ Hemos utilizado la opción "-d" para arrancarlo en "detached mode".
 
 ### Introduction
 
+**Referencias:**
+* [Docker Networking Hands-on Lab](http://training.play-with-docker.com/docker-networking-hol/ "Docker Networking Hands-on Lab")
+
 When you install Docker, it creates **three networks** automatically: `bridge`, `none` and `host`. You can list these networks using the `docker network ls` command:
 
 ```shell
