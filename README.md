@@ -1053,7 +1053,7 @@ Using the explanations from before, we are ready to create our first MongoDB ima
 $ sudo docker build -t my_mongodb .
 ```
 
-**Note:** The `-t [name]` flag here is used to **tag the image**. To learn more about what else you can do during build, run sudo `docker build --help`.
+* **Note:** The `-t [name]` flag here is used to **tag the image**. To learn more about what else you can do during build, run sudo `docker build --help`.
 
 
 #### 10. Running a MongoDB instance
@@ -1064,6 +1064,6 @@ Using the image we have build, we can now proceed to the final step: creating a 
 sudo docker run -name my_first_mdb_instance -i -t my_mongodb
 ```
 
-**Note:** If a name is not set, we will need to deal with complex, alphanumeric IDs which can be obtained by listing all the containers using sudo `docker ps -l`.
+* **Note:** If a name is not set, we will need to deal with complex, alphanumeric IDs which can be obtained by listing all the containers using sudo `docker ps -l`.
 
-**Note:** To detach yourself from the container, use the **escape sequence** `CTRL+P` followed by `CTRL+Q`.
+* **Note:** To detach yourself from the container, use the **escape sequence** `CTRL+P` followed by `CTRL+Q`.
