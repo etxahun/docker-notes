@@ -574,10 +574,40 @@ Hemos utilizado la opción "-d" para arrancarlo en "detached mode".
 
 # Volumes
 
+It is possible to store data within the writable layer of a container, but there are some downsides:
+
+* The data won’t persist when that container is no longer running, and it can be difficult to get the data out of the container if another process needs it.
+
+* A container’s writable layer is tightly coupled to the host machine where the container is running. You can’t easily move the data somewhere else.
+
+* Writing into a container’s writable layer requires a storage driver to manage the filesystem. The storage driver provides a union filesystem, using the Linux kernel. This extra abstraction reduces performance as compared to using data volumes, which write directly to the host filesystem.
+
+
+Docker offers **three different ways to mount data** into a container from the Docker host:
+* Volumes
+* Bind mounts
+* Tmpfs volumes
+
+When in doubt, volumes are almost always the right choice.
+
+### Choose the right type of mount
+No matter which type of mount you choose to use, the data looks the same from within the container. It is exposed as either a directory or an individual file in the container’s filesystem.
+
+An easy way to visualize the difference among `volumes`, `bind mounts`, and `tmpfs mounts` is to think about where the data lives on the Docker host.
+
+<p align="center">
+  <img src="images/types-of-mounts.png">
+</p>
+
+  * **Volumes** are stored in a part of the host filesystem which is managed by Docker (/var/lib/docker/volumes/ on Linux). Non-Docker processes should not modify this part of the filesystem. **Volumes are the best way to persist data in Docker**.
+
+  * **Bind mounts** may be stored anywhere on the host system. They may even be important system files or directories. Non-Docker processes on the Docker host or a Docker container can modify them at any time.
+
+  * **tmpfs mounts** are stored in the host system’s memory only, and are never written to the host system’s filesystem.
+
 # Networking
 
 ### Introduction
-
 
   **Referencias:**
   * [Docker Networking Hands-on Lab](http://training.play-with-docker.com/docker-networking-hol/ "Docker Networking Hands-on Lab")
