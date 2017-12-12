@@ -24,10 +24,10 @@ Mis notas sobre Docker.
   * **[Build del Dockerfile](#build-del-dockerfile)**
   * **[Run the App](#run-the-app)**
 * **[Volumes](#volumes)**
-* **[Networking](#Networking)**
+* **[Networking](#networking)**
   * **[Network Containers](#network-containers)**
-    * **[Crear nuestro propio "Bridge Network"](#crear-nuestro-propio-bridge-network)**
-    * **[Add Containers to a Network](#add-container-to-a-network)**
+    * **[1. Crear nuestro propio "Bridge Network"](#1-crear-nuestro-propio-bridge-network)**
+    * **[2. Add Containers to a Network](#2-add-container-to-a-network)**
 * **[Compose: Linkar Containers](#docker-compose-linkar-containers)**
 * **[Docker CheatSheet](#docker-cheatsheet)**
 * **[Dockerfile Commands CheatSheet](#dockerfile-commands-cheatsheet)**
