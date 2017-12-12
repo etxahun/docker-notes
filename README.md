@@ -922,7 +922,7 @@ $ docker network disconnect bridge networktest
 
 **Importante:** Networks are natural ways to isolate containers from other containers or other networks.
 
-1. Crear nuestro propio "Bridge Network"
+#### 1. Crear nuestro propio "Bridge Network"
 
 Como ya hemos comentado, **Docker Engine** soporta dos tipos de redes: *bridge* y *overlay*:
 
@@ -976,7 +976,7 @@ $ docker network inspect my_bridge
 ]
 ```
 
-2. Add Containers to a Network
+#### 2. Add Containers to a Network
 
 Cuando construyamos aplicaciones Web que deban funcionar de manera conjunta, por seguridad, crearemos una red. Las redes, por definicion, proporcionan una aislamiento completo a los containers. Cuando vayamos a arrancar un container podremos agregarlo a una red.
 
