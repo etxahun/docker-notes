@@ -47,15 +47,6 @@ Docker Engine is a *client-server* application with these major components:
 </p>
 
 
-* **Image:** An _image_ is a lightweight, stand-alone, executable package that includes everything needed to run a piece of software, including the code, a runtime, libraries, environment variables, and config files.
-
-* **Container:**
-  * A _container_ is a runtime instance of an image—what the image becomes in memory when actually executed.
-  * It **runs completely isolated** from the host environment by default, only accessing host files and ports if configured to do so.
-  * Containers **run apps natively** on the host machine’s kernel.
-  * They have **better performance** characteristics than virtual machines that only get virtual access to host resources through a hypervisor.
-  * Containers can get native access, each one running in a discrete process, taking no more memory than any other executable.
-
 ### Docker Architecture
 
 As previously mentioned, Docker uses a **client-server** architecture.
@@ -66,6 +57,24 @@ As previously mentioned, Docker uses a **client-server** architecture.
 <p align="center">
   <img src="images/architecture.svg">
 </p>
+
+### Docker Objects
+
+When you use Docker, you are creating and using **images**, **containers**, **networks**, **volumes**, **plugins**, and **other objects**. This section is a brief overview of some of those objects.
+
+* **Image:**
+  * An _image_ is a lightweight, stand-alone, executable package that includes everything needed to run a piece of software, including the code, a runtime, libraries, environment variables, and config files.
+
+  * An image is a read-only template with instructions for creating a Docker container. Often, an image is based on another image, with some additional customization.
+
+  * You might create your own images. To do that, you create a **Dockerfile** with a simple syntax for defining the steps needed to create the image and run it. Each instruction in a Dockerfile creates a layer in the image.
+
+* **Container:**
+  * A _container_ is a runtime instance of an image.
+  * **Isolation:** It **runs completely isolated** from the host environment by default, only accessing host files and ports if configured to do so. By default, a container is relatively well isolated from other containers and its host machine. You can control how isolated a container’s network, storage, or other underlying subsystems are from other containers or from the host machine.
+  * Containers **run apps natively** on the host machine’s kernel.
+  * They have **better performance** characteristics than virtual machines that only get virtual access to host resources through a hypervisor.
+  * Containers can get native access, each one running in a discrete process, taking no more memory than any other executable.
 
 # Instalación
 
