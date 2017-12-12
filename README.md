@@ -578,7 +578,7 @@ Hemos utilizado la opción "-d" para arrancarlo en "detached mode".
 
 ### Introduction
 
-When you install Docker, it creates **three networks** automatically. You can list these networks using the `docker network ls` command:
+When you install Docker, it creates **three networks** automatically: `bridge`, `none` and `host`. You can list these networks using the `docker network ls` command:
 
 ```shell
 $ docker network ls
