@@ -716,33 +716,33 @@ Unlike a `bind mount`, you can create and manage volumes outside the scope of an
 
   * **Create a volume:**
 
-  ```shell
-  $ docker volume create my-vol
-  ```
+    ```shell
+    $ docker volume create my-vol
+    ```
 
   * **List volumes:**
 
-  ```shell
-  $ docker volume ls
+    ```shell
+    $ docker volume ls
 
-  local               my-vol
-  ```
+    local               my-vol
+    ```
 
   * **Inspect a volume:**
 
-  ```shell
-    $ docker volume inspect my-vol
-    [
-        {
-            "Driver": "local",
-            "Labels": {},
-            "Mountpoint": "/var/lib/docker/volumes/my-vol/_data",
-            "Name": "my-vol",
-            "Options": {},
-            "Scope": "local"
-        }
-    ]
-  ```
+    ```shell
+      $ docker volume inspect my-vol
+      [
+          {
+              "Driver": "local",
+              "Labels": {},
+              "Mountpoint": "/var/lib/docker/volumes/my-vol/_data",
+              "Name": "my-vol",
+              "Options": {},
+              "Scope": "local"
+          }
+      ]
+    ```
 
   * **Remove a volume:**
 
