@@ -80,7 +80,7 @@ When you use Docker, you are creating and using **images**, **containers**, **ne
   * They have **better performance** characteristics than virtual machines that only get virtual access to host resources through a hypervisor.
   * Containers can get native access, each one running in a discrete process, taking no more memory than any other executable.
 
-###The underlying technology
+### The underlying technology
 
 Docker is written in **Go** and takes advantage of several features of the Linux kernel to deliver its functionality.
 
@@ -100,7 +100,7 @@ These namespaces provide a layer of isolation. Each aspect of a container runs i
 
 * **Control Groups**
 
-**Docker Engine** on Linux also relies on another technology called control groups (**cgroups**). A **cgroup** limits an application to a specific set of resources. Control groups allow Docker Engine to share available hardware resources to containers and optionally enforce limits and constraints. For example, you can limit the memory available to a specific container.
+Docker Engine on Linux also relies on another technology called control groups (**cgroups**). A **cgroup** limits an application to a specific set of resources. Control groups allow Docker Engine to share available hardware resources to containers and optionally enforce limits and constraints. For example, you can limit the memory available to a specific container.
 
 * **Union File Systems**
 
@@ -446,18 +446,18 @@ $ docker rm a842945e2414
 
 # Dockerfiles
 
-**Problema:**
+* **Problema:**
 
-Ejecutar contenedores en modo interactivo (-ti), hacer algunos cambios y para luego hacer un "commit" de estos en una nueva imagen, funciona bien. Pero en la mayoría de los casos, tal vez quieras automatizar este proceso de creación de nuestra propia imagen y compartir estos pasos con otros.
+  Ejecutar contenedores en modo interactivo (-ti), hacer algunos cambios y para luego hacer un "commit" de estos en una nueva imagen, funciona bien. Pero en la mayoría de los casos, tal vez quieras automatizar este proceso de creación de nuestra propia imagen y compartir estos pasos con otros.
 
-**Solución:**
+* **Solución:**
 
-Para automatizar el proceso de creación de imágenes Docker, crearemos los ficheros **Dockerfile**. Este archivo de texto está compuesto por:
-* Una serie de instrucciones que describen cuál es la **imagen base** en la que está basado el nuevo contenedor.
-* Los **pasos/instrucciones** que necesitan llevarse a cabo para instalar las dependencias de la aplicación.
-* Archivos que necesitan estar presentes en la imagen.
-* Los **puertos** serán expuestos por el contenedor.
-* El/los **comando(s) a ejecutar** cuando se ejecuta el contenedor.
+  Para automatizar el proceso de creación de imágenes Docker, crearemos los ficheros **Dockerfile**. Este archivo de texto está compuesto por:
+  * Una serie de instrucciones que describen cuál es la **imagen base** en la que está basado el nuevo contenedor.
+  * Los **pasos/instrucciones** que necesitan llevarse a cabo para instalar las dependencias de la aplicación.
+  * Archivos que necesitan estar presentes en la imagen.
+  * Los **puertos** serán expuestos por el contenedor.
+  * El/los **comando(s) a ejecutar** cuando se ejecuta el contenedor.
 
 ### Cómo Empezar
 
