@@ -730,7 +730,7 @@ Unlike a `bind mount`, you can create and manage volumes outside the scope of an
 
   **Inspect a volume:**
 
-  ```
+  ```shell
     $ docker volume inspect my-vol
     [
         {
