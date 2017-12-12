@@ -610,29 +610,29 @@ When you run a container, you can use the `--network` flag to specify which netw
 
 * **None:** The `none` network adds a container to a container-specific network stack. That container lacks a network interface. Attaching to such a container and looking at its stack you see this:
 
-```shell
-$ docker attach nonenetcontainer
+  ```shell
+  $ docker attach nonenetcontainer
 
-root@0cb243cd1293:/# cat /etc/hosts
-127.0.0.1	localhost
-::1	localhost ip6-localhost ip6-loopback
-fe00::0	ip6-localnet
-ff00::0	ip6-mcastprefix
-ff02::1	ip6-allnodes
-ff02::2	ip6-allrouters
+  root@0cb243cd1293:/# cat /etc/hosts
+  127.0.0.1	localhost
+  ::1	localhost ip6-localhost ip6-loopback
+  fe00::0	ip6-localnet
+  ff00::0	ip6-mcastprefix
+  ff02::1	ip6-allnodes
+  ff02::2	ip6-allrouters
 
-root@0cb243cd1293:/# ip -4 addr
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue qlen 1
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
+  root@0cb243cd1293:/# ip -4 addr
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue qlen 1
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
 
-root@0cb243cd1293:/#
-```
-* **Note:** You can detach from the container and leave it running with `CTRL-p CTRL-q`.
+  root@0cb243cd1293:/#
+  ```
+  * **Note:** You can detach from the container and leave it running with `CTRL-p CTRL-q`.
 
 * **Host:** The `host` network adds a container on the host’s network stack. As far as the network is concerned, **there is no isolation between the host machine and the container**. For instance, if you run a container that runs a web server on port 80 using host networking, the web server is available on port 80 of the host machine.
 
-The `none` and `host` networks are not directly configurable in Docker. However, you can configure the default `bridge` network, as well as your own user-defined bridge networks.
+  The `none` and `host` networks are not directly configurable in Docker. However, you can configure the default `bridge` network, as well as your own user-defined bridge networks.
 
 ### Network Containers
 
