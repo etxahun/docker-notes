@@ -593,20 +593,20 @@ When you run a container, you can use the `--network` flag to specify which netw
 
 * **Bridge:** The bridge network represents the `docker0` network present in all Docker installations. Unless you specify otherwise with the `docker run --network=<NETWORK>` option, the Docker daemon connects containers to this network by default.
 
-We can see this bridge as part of a host’s network stack by using the `ip addr show` command:
+  We can see this bridge as part of a host’s network stack by using the `ip addr show` command:
 
-```shell
-$ ip addr show
+  ```shell
+  $ ip addr show
 
-docker0   Link encap:Ethernet  HWaddr 02:42:47:bc:3a:eb
-          inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
-          inet6 addr: fe80::42:47ff:febc:3aeb/64 Scope:Link
-          UP BROADCAST RUNNING MULTICAST  MTU:9001  Metric:1
-          RX packets:17 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:0
-          RX bytes:1100 (1.1 KB)  TX bytes:648 (648.0 B)
-```
+  docker0   Link encap:Ethernet  HWaddr 02:42:47:bc:3a:eb
+            inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
+            inet6 addr: fe80::42:47ff:febc:3aeb/64 Scope:Link
+            UP BROADCAST RUNNING MULTICAST  MTU:9001  Metric:1
+            RX packets:17 errors:0 dropped:0 overruns:0 frame:0
+            TX packets:8 errors:0 dropped:0 overruns:0 carrier:0
+            collisions:0 txqueuelen:0
+            RX bytes:1100 (1.1 KB)  TX bytes:648 (648.0 B)
+  ```
 
 * **None:** The `none` network adds a container to a container-specific network stack. That container lacks a network interface. Attaching to such a container and looking at its stack you see this:
 
