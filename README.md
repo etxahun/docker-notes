@@ -3,10 +3,10 @@ Mis notas sobre Docker.
 
 # Table of Contents
 * **[Introducción](#introducción)**
-  * **[What is Docker?](#what-is-docker)
-  * **[Docker Engine](#docker-engine)
-  * **[Docker Architecture](#docker-architecture)
-  * **[Docker Objects](#docker-objects)
+  * **[What is Docker?](#what-is-docker)**
+  * **[Docker Engine](#docker-engine)**
+  * **[Docker Architecture](#docker-architecture)**
+  * **[Docker Objects](#docker-objects)**
 * **[Instalación](#instalación)**
 * **[Containers](#containers)**
   * **[Ports in Containers](#ports-in-containers)**
