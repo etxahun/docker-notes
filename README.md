@@ -29,8 +29,9 @@ Mis notas sobre Docker.
     * **[1. Crear nuestro propio "Bridge Network"](#1-crear-nuestro-propio-bridge-network)**
     * **[2. Add Containers to a Network](#2-add-containers-to-a-network)**
 * **[Compose: Linkar Containers](#docker-compose-linkar-containers)**
-* **[Docker CheatSheet](#docker-cheatsheet)**
-* **[Dockerfile Commands CheatSheet](#dockerfile-commands-cheatsheet)**
+* **[CheatSheets](#cheatsheets)**
+  * **[Docker General Commands](#docker-general-cheatsheet)**
+  * **[Dockerfile Commands](#dockerfile-commands)**
 
 # Introducción
 
@@ -769,7 +770,8 @@ Cuando queramos "linkar" dos o más contenedores tendremos que establecer su rel
   ```
   Y para comprobar que todo ha ido bien, abriremos la url http://127.0.0.3:8080 para aceder a la página de Wordpress.
 
-# Docker CheatSheet
+# CheatSheets
+### Docker General Commands
 
 A continuación se muestra un listado con los *comandos básicos* de Docker:
 
@@ -792,7 +794,7 @@ docker push username/repository:tag              # Upload tagged image to regist
 docker run username/repository:tag               # Run image from a registry
 ```
 
-# Dockerfile Commands CheatSheet
+### Dockerfile Commands
 
 ### ADD
 
