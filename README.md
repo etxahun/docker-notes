@@ -796,7 +796,7 @@ docker run username/repository:tag               # Run image from a registry
 
 ### Dockerfile Commands
 
-### ADD
+#### ADD
 
 The ADD command gets two arguments: a source and a destination. It basically copies the files from the source on the host into the container's own filesystem at the set destination. If, however, the source is a URL (e.g. http://github.com/user/file/), then the contents of the URL are downloaded and placed at the destination.
 
@@ -806,7 +806,7 @@ Example:
 ADD /my_app_folder /my_app_folder
 ```
 
-### CMD
+#### CMD
 
 The command `CMD`, similarly to `RUN`, can be used for executing a specific command. However, unlike `RUN` it is **not executed during build**, but **when a container is instantiated** using the image being built. Therefore, it should be considered as an initial, default command that gets executed (i.e. run) with the creation of containers based on the image.
 
@@ -817,7 +817,7 @@ Example:
 # Usage 1: CMD application "argument", "argument", ..
 CMD "echo" "Hello docker!"
 ```
-### ENTRYPOINT
+#### ENTRYPOINT
 
 `ENTRYPOINT` argument sets the concrete default application that is used every time a container is created using the image. For example, if you have installed a specific application inside an image and you will use this image to only run that application, you can state it with ENTRYPOINT and whenever a container is created from that image, your application will be the target.
 
@@ -836,7 +836,7 @@ CMD "Hello docker!"
 ENTRYPOINT echo
 ```
 
-### ENV
+#### ENV
 
 The `ENV` command is used to set the environment variables (one or more). These variables consist of “key = value” pairs which can be accessed within the container by scripts and applications alike. This functionality of docker offers an enormous amount of flexibility for running programs.
 
@@ -846,7 +846,7 @@ Example:
 ENV SERVER_WORKS 4
 ```
 
-### EXPOSE
+#### EXPOSE
 
 The `EXPOSE` command is used to associate a specified port to enable networking between the running process inside the container and the outside world (i.e. the host).
 
@@ -856,7 +856,7 @@ Example:
 EXPOSE 8080
 ```
 
-### FROM
+#### FROM
 
 `FROM` directive is probably **the most crucial command** amongst all others for Dockerfiles. It **defines the base image to use to start the build process**. It can be any image, including the ones you have created previously. If a `FROM` image is not found on the host, docker will try to find it (and download) from the docker image index. It needs to be the first command declared inside a Dockerfile.
 
@@ -866,7 +866,7 @@ Example:
 FROM ubuntu
 ```
 
-### MAINTAINER
+#### MAINTAINER
 
 One of the commands that can be set anywhere in the file - although it would be better if it was declared on top - is `MAINTAINER`. This non-executing command **declares the author**, hence setting the author field of the images. It should come nonetheless after `FROM`.
 
@@ -876,7 +876,7 @@ Example:
 MAINTAINER authors_name
 ```
 
-### RUN
+#### RUN
 
 The `RUN` command is the central executing directive for Dockerfiles. It takes a command as its argument and runs it to form the image. Unlike `CMD`, it actually is used to build the image (forming another layer on top of the previous one which is committed).
 
@@ -896,7 +896,7 @@ Example:
 USER 751
 ```
 
-### VOLUME
+#### VOLUME
 
 The `VOLUME` command is used to enable access from your container to a directory on the host machine (i.e. mounting it).
 
@@ -906,7 +906,7 @@ Example:
 VOLUME ["/my_files"]
 ```
 
-### WORKDIR
+#### WORKDIR
 
 The `WORKDIR` directive is used to set where the command defined with CMD is to be executed.
 
@@ -916,7 +916,7 @@ Example:
 WORKDIR ~/
 ```
 
-### EJEMPLO: Create an Image to Install MongoDB
+#### EJEMPLO: Create an Image to Install MongoDB
 
 I will create a Dockerfile document and populate it step-by-step with the end result of having a Dockerfile, which can be used to create a docker image to run MongoDB containers.
 
