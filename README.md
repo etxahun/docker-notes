@@ -24,9 +24,10 @@ Mis notas sobre Docker.
   * **[Build del Dockerfile](#build-del-dockerfile)**
   * **[Run the App](#run-the-app)**
 * **[Volumes](#volumes)**
-* **[Network Containers](#network-containers)**
-  * **[Crear nuestro propio "Bridge Network"](#crear-nuestro-propio-bridge-network)**
-  * **[Add Containers to a Network](#add-container-to-a-network)**
+* **[Networking](#Networking)**
+  * **[Network Containers](#network-containers)**
+    * **[Crear nuestro propio "Bridge Network"](#crear-nuestro-propio-bridge-network)**
+    * **[Add Containers to a Network](#add-container-to-a-network)**
 * **[Compose: Linkar Containers](#docker-compose-linkar-containers)**
 * **[Docker CheatSheet](#docker-cheatsheet)**
 * **[Dockerfile Commands CheatSheet](#dockerfile-commands-cheatsheet)**
@@ -572,7 +573,9 @@ Hemos utilizado la opción "-d" para arrancarlo en "detached mode".
 
 # Volumes
 
-# Network Containers
+# Networking
+
+### Network Containers
 
 Docker permite realizar "containers networking" gracias al uso de sus **network drivers**. Por defecto, Docker proporciona dos **drivers**: `bridge` y `overlay`.
 
@@ -649,7 +652,7 @@ $ docker network disconnect bridge networktest
 
 **Importante:** Networks are natural ways to isolate containers from other containers or other networks.
 
-### Crear nuestro propio "Bridge Network"
+#### 1. Crear nuestro propio "Bridge Network"
 
 Como ya hemos comentado, **Docker Engine** soporta dos tipos de redes: *bridge* y *overlay*:
 
@@ -703,7 +706,7 @@ $ docker network inspect my_bridge
 ]
 ```
 
-#### Add Containers to a Network
+#### 2. Add Containers to a Network
 
 Cuando construyamos aplicaciones Web que deban funcionar de manera conjunta, por seguridad, crearemos una red. Las redes, por definicion, proporcionan una aislamiento completo a los containers. Cuando vayamos a arrancar un container podremos agregarlo a una red.
 
