@@ -823,98 +823,107 @@ CMD "echo" "Hello docker!"
 
 If you couple `ENTRYPOINT` with `CMD`, you can remove "application" from CMD and just leave "arguments" which will be passed to the ENTRYPOINT.
 
-Example:
-```shell
-# Usage: ENTRYPOINT application "argument", "argument", ..
-# Remember: arguments are optional. They can be provided by CMD
-#           or during the creation of a container.
-ENTRYPOINT echo
+* **Example:**
 
-# Usage example with CMD:
-# Arguments set with CMD can be overridden during *run*
-CMD "Hello docker!"
-ENTRYPOINT echo
-```
+  ```shell
+  # Usage: ENTRYPOINT application "argument", "argument", ..
+  # Remember: arguments are optional. They can be provided by CMD
+  #           or during the creation of a container.
+  ENTRYPOINT echo
+
+  # Usage example with CMD:
+  # Arguments set with CMD can be overridden during *run*
+  CMD "Hello docker!"
+  ENTRYPOINT echo
+  ```
 
 #### ENV
 
 The `ENV` command is used to set the environment variables (one or more). These variables consist of “key = value” pairs which can be accessed within the container by scripts and applications alike. This functionality of docker offers an enormous amount of flexibility for running programs.
 
-Example:
-```shell
-# Usage: ENV key value
-ENV SERVER_WORKS 4
-```
+* **Example:**
+
+  ```shell
+  # Usage: ENV key value
+  ENV SERVER_WORKS 4
+  ```
 
 #### EXPOSE
 
 The `EXPOSE` command is used to associate a specified port to enable networking between the running process inside the container and the outside world (i.e. the host).
 
-Example:
-```shell
-# Usage: EXPOSE [port]
-EXPOSE 8080
-```
+* **Example:**
+
+  ```shell
+  # Usage: EXPOSE [port]
+  EXPOSE 8080
+  ```
 
 #### FROM
 
 `FROM` directive is probably **the most crucial command** amongst all others for Dockerfiles. It **defines the base image to use to start the build process**. It can be any image, including the ones you have created previously. If a `FROM` image is not found on the host, docker will try to find it (and download) from the docker image index. It needs to be the first command declared inside a Dockerfile.
 
-Example:
-```shell
-# Usage: FROM [image name]
-FROM ubuntu
-```
+* **Example:**
+
+  ```shell
+  # Usage: FROM [image name]
+  FROM ubuntu
+  ```
 
 #### MAINTAINER
 
 One of the commands that can be set anywhere in the file - although it would be better if it was declared on top - is `MAINTAINER`. This non-executing command **declares the author**, hence setting the author field of the images. It should come nonetheless after `FROM`.
 
-Example:
-```shell
-# Usage: MAINTAINER [name]
-MAINTAINER authors_name
-```
+* **Example:**
+
+  ```shell
+  # Usage: MAINTAINER [name]
+  MAINTAINER authors_name
+  ```
 
 #### RUN
 
 The `RUN` command is the central executing directive for Dockerfiles. It takes a command as its argument and runs it to form the image. Unlike `CMD`, it actually is used to build the image (forming another layer on top of the previous one which is committed).
 
-Example:
-```shell
-# Usage: RUN [command]
-RUN aptitude install -y riak
-```
+* **Example:**
+
+  ```shell
+  # Usage: RUN [command]
+  RUN aptitude install -y riak
+  ```
 
 ### USER
 
 The `USER` directive is used to set the UID (or username) which is to run the container based on the image being built.
 
-Example:
-```shell
-# Usage: USER [UID]
-USER 751
-```
+* **Example:**
+
+  ```shell
+  # Usage: USER [UID]
+  USER 751
+  ```
 
 #### VOLUME
 
 The `VOLUME` command is used to enable access from your container to a directory on the host machine (i.e. mounting it).
 
-Example:
-```shell
-# Usage: VOLUME ["/dir_1", "/dir_2" ..]
-VOLUME ["/my_files"]
-```
+* **Example:**
+
+  ```shell
+  # Usage: VOLUME ["/dir_1", "/dir_2" ..]
+  VOLUME ["/my_files"]
+  ```
 
 #### WORKDIR
 
 The `WORKDIR` directive is used to set where the command defined with CMD is to be executed.
 
-Example:
-```shell
-# Usage: WORKDIR /path
-WORKDIR ~/
-```
+* **Example:**
+
+  ```shell
+  # Usage: WORKDIR /path
+  WORKDIR ~/
+  ```
 
 #### EJEMPLO: Create an Image to Install MongoDB
 
