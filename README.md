@@ -13,16 +13,6 @@ Mis notas sobre Docker.
   * **[Ports in Containers](#ports-in-containers)**
 * **[Images](#images)**
   * **[Crear nuestras propias imágenes](#crear-nuestras-propias-images)**
-* **[Limpieza](#limpieza)**
-  * **[Containers](#containers-1)**
-  * **[Images](#images-1)**
-  * **[Volumes](#volumes)**
-* **[Ciclo de vida de un contenedor (Create/Start/Stop/Kill/Remove)](#ciclo-de-vida-de-un-contenedor-createstartstopkillremove)**
-* **[Dockerfiles](#dockerfiles)**
-  * **[Cómo Empezar](#cómo-empezar)**
-  * **[La Aplicación](#la-aplicación)**
-  * **[Build del Dockerfile](#build-del-dockerfile)**
-  * **[Run the App](#run-the-app)**
 * **[Volumes](#volumes-1)**
   * **[Choose the right type of mount](#choose-the-right-type-of-mount)**
     * **[Volumes](#volumes)**
@@ -32,12 +22,22 @@ Mis notas sobre Docker.
     * **[Good Use case for Bind Mounts](#good-use-case-for-bind-mounts)**
     * **[Good Use case for tmpfs Mounts](#good-use-case-for-tmpfs-mounts)**
     * **[Ejemplo Práctico](#ejemplo-práctico)**
+* **[Ciclo de vida de un contenedor (Create/Start/Stop/Kill/Remove)](#ciclo-de-vida-de-un-contenedor-createstartstopkillremove)**
+* **[Limpieza](#limpieza)**
+  * **[Containers](#containers-1)**
+  * **[Images](#images-1)**
+  * **[Volumes](#volumes)**
+* **[Dockerfiles](#dockerfiles)**
+  * **[Cómo Empezar](#cómo-empezar)**
+  * **[La Aplicación](#la-aplicación)**
+  * **[Build del Dockerfile](#build-del-dockerfile)**
+  * **[Run the App](#run-the-app)**
+* **[Docker Compose: Linkar Containers](#docker-compose-linkar-containers)**
 * **[Networking](#networking)**
   * **[Introduction](#introduction)**
   * **[Network Containers](#network-containers)**
     * **[1. Crear nuestro propio "Bridge Network"](#1-crear-nuestro-propio-bridge-network)**
     * **[2. Add Containers to a Network](#2-add-containers-to-a-network)**
-* **[Compose: Linkar Containers](#docker-compose-linkar-containers)**
 * **[CheatSheets](#cheatsheets)**
   * **[Docker General Commands](#docker-general-cheatsheet)**
   * **[Dockerfile Commands](#dockerfile-commands)**
@@ -364,223 +364,6 @@ $ docker push username/repository:tagear
 
 Una vez subido, podremos ver en la Web de [Docker Hub](https://hub.docker.com/ "Docker Hub").
 
-
-# Limpieza
-### Containers:
-* Borrar container:
-```shell
-$ docker rm <container_ID>
-```
-
-* Borrar container y sus volumenes asociados:
-```shell
-$ docker rm -v <container_ID>
-```
-
-* Borrar TODOS los containers:
-```shell
-$ docker rm $(docker ps -a -q)
-```
-
-### Images:
-* Borrar imágenes:
-```shell
-$ docker rmi <container_ID>
-```
-
-* Borrar TODAS las imáganes:
-```shell
-$ docker rmi $(docker images -q)
-```
-* Listar imágenes <none> "colgadas":
-```shell
-$ docker images -f "dangling=true"
-```
-
-* Borrar imágenes <none> "colgadas":
-```shell
-$ docker rmi $(docker images -f "dangling=true" -q)
-```
-
-### Volumes:
-* Borrar TODOS los "volume" que no se estén utilizando:
-```shell
-$ docker volume rm $(docker volumels -q)
-```
-
-
-# Ciclo de vida de un contenedor (Create/Start/Stop/Kill/Remove)
-
-Hasta ahora vimos cómo ejecutar un contenedor tanto en *foreground* como en *background* (detached). Ahora veremos cómo manejar el ciclo completo de vida de un contenedor. Docker provee de comandos como `create` , `start`, `stop`, `kill` , y `rm`. En todos ellos podría pasarse el argumento "-h" para ver las opciones disponibles.
-Ejemplo:
-```shell
-$ docker create -h
-```
-
-Más arriba vimos cómo correr un contenedor en segundo plano (detached). Ahora veremos en el mismo ejemplo, pero con el comando `create`. La única diferencia es que ésta vez no especificaremos la opción "-d". Una vez preparado, necesitaremos lanzar el contenedor con `docker start`.
-
-Ejemplo:
-```shell
-$ docker create -P --expose=8001 python:2.7 python -m SimpleHTTPServer 8001
-  a842945e2414132011ae704b0c4a4184acc4016d199dfd4e7181c9b89092de13
-
-$ docker ps -a
-  CONTAINER ID IMAGE      COMMAND              CREATED       ... NAMES
-  a842945e2414 python:2.7 "python -m SimpleHTT 8 seconds ago ... fervent_hodgkin
-
-$ docker start a842945e2414
-  a842945e2414
-
-$ docker ps
-  CONTAINER ID IMAGE      COMMAND              ... NAMES
-  a842945e2414 python:2.7 "python -m SimpleHTT ... fervent_hodgkin
-```
-
-### Detener Containers:
-
-Siguiendo el ejemplo, para **detener** el contenedor se puede ejecutar cualquiera de los siguientes comandos `kill` ó `stop`:
-```shell
-$ docker kill a842945e2414 (envía SIGKILL)
-$ docker stop a842945e2414 (envía SIGTERM).
-```
-
-Asimismo, pueden reiniciarse (hacer un `docker stop a842945e2414` y luego un `docker start a842945e2414`):
-
-```shell
-$ docker restart a842945e2414
-```
-
-o destruirse:
-
-```shell
-$ docker rm a842945e2414
-```
-
-# Dockerfiles
-
-* **Problema:**
-
-  Ejecutar contenedores en modo interactivo (-ti), hacer algunos cambios y para luego hacer un "commit" de estos en una nueva imagen, funciona bien. Pero en la mayoría de los casos, tal vez quieras automatizar este proceso de creación de nuestra propia imagen y compartir estos pasos con otros.
-
-* **Solución:**
-
-  Para automatizar el proceso de creación de imágenes Docker, crearemos los ficheros **Dockerfile**. Este archivo de texto está compuesto por:
-  * Una serie de instrucciones que describen cuál es la **imagen base** en la que está basado el nuevo contenedor.
-  * Los **pasos/instrucciones** que necesitan llevarse a cabo para instalar las dependencias de la aplicación.
-  * Archivos que necesitan estar presentes en la imagen.
-  * Los **puertos** serán expuestos por el contenedor.
-  * El/los **comando(s) a ejecutar** cuando se ejecuta el contenedor.
-
-### Cómo Empezar
-
-En primer lugar crearemos un directorio vacio y entraremos a dicho directorio
-```shell
- $ mkdir pruebadockerfile
- $ cd pruebadockerfile/
- ```
-Una vez dentro crearemos un fichero llamado "dockerfile" y le copiaremos el siguiente código:
-
-```shell
-# Use an official Python runtime as a parent image
-FROM python:2.7-slim
-
-# Set the working directory to /app
-WORKDIR /app
-
-# Copy the current directory contents into the container at /app
-ADD . /app
-
-# Install any needed packages specified in requirements.txt
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
-
-# Make port 80 available to the world outside this container
-EXPOSE 80
-
-# Define environment variable
-ENV NAME World
-
-# Run app.py when the container launches
-CMD ["python", "app.py"]
-```
-Dentro del "dockerfile" se hace referencia a un par de fichero que no hemos creado aun: **app.py** y **requirements.txt**.
-
-### La aplicación
-
-Crearemos ambos ficheros dentro del mismo directorio donde se encuentra el fichero "dockerfile":
-
-`requirements.txt`
-```shell
-Flask
-Redis
-```
-
-`app.py`
-```shell
-from flask import Flask
-from redis import Redis, RedisError
-import os
-import socket
-
-# Connect to Redis
-redis = Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
-
-app = Flask(__name__)
-
-@app.route("/")
-def hello():
-    try:
-        visits = redis.incr("counter")
-    except RedisError:
-        visits = "<i>cannot connect to Redis, counter disabled</i>"
-
-    html = "<h3>Hello {name}!</h3>" \
-           "<b>Hostname:</b> {hostname}<br/>" \
-           "<b>Visits:</b> {visits}"
-    return html.format(name=os.getenv("NAME", "world"), hostname=socket.gethostname(), visits=visits)
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80)
-```
-
-Como vemos, en el fichero "requirements.txt" se especifican los paquetes de python **Flask** y **Redis** que se van a instalar.
-
-### Build del Dockerfile
-
-Ya estamos listos para hacer el "build" de la aplicación. Nos aseguraremos de estar en el mismo directorio donde están los fichero "dockerfile", "app.py" y "requirements.txt":
-
-```shell
-$ ls
-Dockerfile		app.py			requirements.txt
-```
-Y a continuación realizamos el "build". Esto nos creará un "Docker image" que "tagearemos" con "-t" para que tenga un "friendly name":
-
-```shell
-$ docker build -t friendlyhello .
-```
-Para ver que se ha creado correctamente la imagen haremos lo siguiente:
-```shell
-$ docker images (o sino docker image ls)
-
-REPOSITORY            TAG                 IMAGE ID
-friendlyhello         latest              326387cea398
-```
-### Run the app
-
-Arrancaremos la aplicación mapeando el puerto **4000** de nuestro host al puerto **80** del container mediante el parámetro "-p":
-
-```shell
-$ docker run -p 4000:80 friendlyhello
-```
-
-Si todo ha ido bien deberíamos ver como se ha cargado un servidor Web Flask de Python sirviendo en: `http://0.0.0.0:80`. Dicho mensaje lo indica el servidor Web que está corriendo dentro del container, sin embargo como hemos mapeado el puerto **4000** con el puerto **80**, abriremos el navegador y accederemos mediante: `http://localhost:4000`.
-
-Si queremos que el container funcione en *background* (detached mode) haremos lo siguiente:
-
-```shell
-$ docker run -d -p 4000:80 friendlyhello
-```
-Hemos utilizado la opción "-d" para arrancarlo en "detached mode".
-
 # Volumes
 
 It is possible to store data within the writable layer of a container, but there are some downsides:
@@ -781,6 +564,253 @@ Unlike a `bind mount`, you can create and manage volumes outside the scope of an
       ],
     ```
 
+# Ciclo de vida de un contenedor (Create/Start/Stop/Kill/Remove)
+
+Hasta ahora vimos cómo ejecutar un contenedor tanto en *foreground* como en *background* (detached). Ahora veremos cómo manejar el ciclo completo de vida de un contenedor. Docker provee de comandos como `create` , `start`, `stop`, `kill` , y `rm`. En todos ellos podría pasarse el argumento "-h" para ver las opciones disponibles.
+Ejemplo:
+```shell
+$ docker create -h
+```
+
+Más arriba vimos cómo correr un contenedor en segundo plano (detached). Ahora veremos en el mismo ejemplo, pero con el comando `create`. La única diferencia es que ésta vez no especificaremos la opción "-d". Una vez preparado, necesitaremos lanzar el contenedor con `docker start`.
+
+Ejemplo:
+```shell
+$ docker create -P --expose=8001 python:2.7 python -m SimpleHTTPServer 8001
+  a842945e2414132011ae704b0c4a4184acc4016d199dfd4e7181c9b89092de13
+
+$ docker ps -a
+  CONTAINER ID IMAGE      COMMAND              CREATED       ... NAMES
+  a842945e2414 python:2.7 "python -m SimpleHTT 8 seconds ago ... fervent_hodgkin
+
+$ docker start a842945e2414
+  a842945e2414
+
+$ docker ps
+  CONTAINER ID IMAGE      COMMAND              ... NAMES
+  a842945e2414 python:2.7 "python -m SimpleHTT ... fervent_hodgkin
+```
+
+### Detener Containers:
+
+Siguiendo el ejemplo, para **detener** el contenedor se puede ejecutar cualquiera de los siguientes comandos `kill` ó `stop`:
+```shell
+$ docker kill a842945e2414 (envía SIGKILL)
+$ docker stop a842945e2414 (envía SIGTERM).
+```
+
+Asimismo, pueden reiniciarse (hacer un `docker stop a842945e2414` y luego un `docker start a842945e2414`):
+
+```shell
+$ docker restart a842945e2414
+```
+
+o destruirse:
+
+```shell
+$ docker rm a842945e2414
+```
+
+# Limpieza
+### Containers:
+* Borrar container:
+```shell
+$ docker rm <container_ID>
+```
+
+* Borrar container y sus volumenes asociados:
+```shell
+$ docker rm -v <container_ID>
+```
+
+* Borrar TODOS los containers:
+```shell
+$ docker rm $(docker ps -a -q)
+```
+
+### Images:
+* Borrar imágenes:
+```shell
+$ docker rmi <container_ID>
+```
+
+* Borrar TODAS las imáganes:
+```shell
+$ docker rmi $(docker images -q)
+```
+* Listar imágenes <none> "colgadas":
+```shell
+$ docker images -f "dangling=true"
+```
+
+* Borrar imágenes <none> "colgadas":
+```shell
+$ docker rmi $(docker images -f "dangling=true" -q)
+```
+
+### Volumes:
+* Borrar TODOS los "volume" que no se estén utilizando:
+```shell
+$ docker volume rm $(docker volumels -q)
+```
+
+# Dockerfiles
+
+* **Problema:**
+
+  Ejecutar contenedores en modo interactivo (-ti), hacer algunos cambios y para luego hacer un "commit" de estos en una nueva imagen, funciona bien. Pero en la mayoría de los casos, tal vez quieras automatizar este proceso de creación de nuestra propia imagen y compartir estos pasos con otros.
+
+* **Solución:**
+
+  Para automatizar el proceso de creación de imágenes Docker, crearemos los ficheros **Dockerfile**. Este archivo de texto está compuesto por:
+  * Una serie de instrucciones que describen cuál es la **imagen base** en la que está basado el nuevo contenedor.
+  * Los **pasos/instrucciones** que necesitan llevarse a cabo para instalar las dependencias de la aplicación.
+  * Archivos que necesitan estar presentes en la imagen.
+  * Los **puertos** serán expuestos por el contenedor.
+  * El/los **comando(s) a ejecutar** cuando se ejecuta el contenedor.
+
+### Cómo Empezar
+
+En primer lugar crearemos un directorio vacio y entraremos a dicho directorio
+```shell
+ $ mkdir pruebadockerfile
+ $ cd pruebadockerfile/
+ ```
+Una vez dentro crearemos un fichero llamado "dockerfile" y le copiaremos el siguiente código:
+
+```shell
+# Use an official Python runtime as a parent image
+FROM python:2.7-slim
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+ADD . /app
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
+
+# Make port 80 available to the world outside this container
+EXPOSE 80
+
+# Define environment variable
+ENV NAME World
+
+# Run app.py when the container launches
+CMD ["python", "app.py"]
+```
+Dentro del "dockerfile" se hace referencia a un par de fichero que no hemos creado aun: **app.py** y **requirements.txt**.
+
+### La aplicación
+
+Crearemos ambos ficheros dentro del mismo directorio donde se encuentra el fichero "dockerfile":
+
+`requirements.txt`
+```shell
+Flask
+Redis
+```
+
+`app.py`
+```shell
+from flask import Flask
+from redis import Redis, RedisError
+import os
+import socket
+
+# Connect to Redis
+redis = Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    try:
+        visits = redis.incr("counter")
+    except RedisError:
+        visits = "<i>cannot connect to Redis, counter disabled</i>"
+
+    html = "<h3>Hello {name}!</h3>" \
+           "<b>Hostname:</b> {hostname}<br/>" \
+           "<b>Visits:</b> {visits}"
+    return html.format(name=os.getenv("NAME", "world"), hostname=socket.gethostname(), visits=visits)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=80)
+```
+
+Como vemos, en el fichero "requirements.txt" se especifican los paquetes de python **Flask** y **Redis** que se van a instalar.
+
+### Build del Dockerfile
+
+Ya estamos listos para hacer el "build" de la aplicación. Nos aseguraremos de estar en el mismo directorio donde están los fichero "dockerfile", "app.py" y "requirements.txt":
+
+```shell
+$ ls
+Dockerfile		app.py			requirements.txt
+```
+Y a continuación realizamos el "build". Esto nos creará un "Docker image" que "tagearemos" con "-t" para que tenga un "friendly name":
+
+```shell
+$ docker build -t friendlyhello .
+```
+Para ver que se ha creado correctamente la imagen haremos lo siguiente:
+```shell
+$ docker images (o sino docker image ls)
+
+REPOSITORY            TAG                 IMAGE ID
+friendlyhello         latest              326387cea398
+```
+### Run the app
+
+Arrancaremos la aplicación mapeando el puerto **4000** de nuestro host al puerto **80** del container mediante el parámetro "-p":
+
+```shell
+$ docker run -p 4000:80 friendlyhello
+```
+
+Si todo ha ido bien deberíamos ver como se ha cargado un servidor Web Flask de Python sirviendo en: `http://0.0.0.0:80`. Dicho mensaje lo indica el servidor Web que está corriendo dentro del container, sin embargo como hemos mapeado el puerto **4000** con el puerto **80**, abriremos el navegador y accederemos mediante: `http://localhost:4000`.
+
+Si queremos que el container funcione en *background* (detached mode) haremos lo siguiente:
+
+```shell
+$ docker run -d -p 4000:80 friendlyhello
+```
+Hemos utilizado la opción "-d" para arrancarlo en "detached mode".
+
+# Docker Compose: Linkar containers
+
+Cuando estamos diseñando una "aplicación distribuida", a cada una de las piezas se le conoce como "service". Por ejemplo, si pensamos en una aplicación de "Video Sharing site", tendremos que tener por un lado un servicio que nos permita almacenar en una base de datos tod el contenido multimedia, por otra parte tendremos un servicio para realizar el "transcoding" en background cada vez que un usuario suba un vídeo, tambien tendremos un servicio para la parte front-end, etc.
+
+Llamamos "services" a los "containers" que pongamos en producción. Un servicio se compone de una sola imagen, con todo lo necesario para que ésta proporcione la funciones para lo que ha sido creada. En Docker, la manera en que definiremos dichas "images" es con "Docker Compose", escribiendo lo que se conocen como ficheros **docker-compose.yml**.
+
+Cuando queramos "linkar" dos o más contenedores tendremos que establecer su relación en un fichero YAML. A continuación se muestra un ejemplo de un fichero que "linka" un container "Web" (Wordpress) y uno de base de datos "MySQL":
+
+* Contenido del fichero **ejemplo.yml**:
+
+  ```YAML
+  web:
+     image: wordpress
+     links:
+       - mysql
+     environment:
+       - WORDPRESS_DB_PASSWORD=sample
+     ports:
+       - "127.0.0.3:8080:80"
+  mysql:
+  image: mysql:latest
+  environment:
+     - MYSQL_ROOT_PASSWORD=sample
+     - MYSQL_DATABASE=wordpress
+
+  ```
+  Y para ejecutarlo, estando en el mismo directorio donde está el fichero **ejemplo.yml**, haremos lo siguiente:
+
+  ```shell
+  $ docker-compose up
+  ```
+  Y para comprobar que todo ha ido bien, abriremos la url http://127.0.0.3:8080 para aceder a la página de Wordpress.
 
 # Networking
 
@@ -1004,40 +1034,6 @@ $ docker run -d --name web training/webapp python app.py
 <p align="center">
   <img src="images/bridge2.png">
 </p>
-
-
-# Docker Compose: Linkar containers
-
-Cuando estamos diseñando una "aplicación distribuida", a cada una de las piezas se le conoce como "service". Por ejemplo, si pensamos en una aplicación de "Video Sharing site", tendremos que tener por un lado un servicio que nos permita almacenar en una base de datos tod el contenido multimedia, por otra parte tendremos un servicio para realizar el "transcoding" en background cada vez que un usuario suba un vídeo, tambien tendremos un servicio para la parte front-end, etc.
-
-Llamamos "services" a los "containers" que pongamos en producción. Un servicio se compone de una sola imagen, con todo lo necesario para que ésta proporcione la funciones para lo que ha sido creada. En Docker, la manera en que definiremos dichas "images" es con "Docker Compose", escribiendo lo que se conocen como ficheros **docker-compose.yml**.
-
-Cuando queramos "linkar" dos o más contenedores tendremos que establecer su relación en un fichero YAML. A continuación se muestra un ejemplo de un fichero que "linka" un container "Web" (Wordpress) y uno de base de datos "MySQL":
-
-* Contenido del fichero **ejemplo.yml**:
-
-  ```YAML
-  web:
-     image: wordpress
-     links:
-       - mysql
-     environment:
-       - WORDPRESS_DB_PASSWORD=sample
-     ports:
-       - "127.0.0.3:8080:80"
-  mysql:
-  image: mysql:latest
-  environment:
-     - MYSQL_ROOT_PASSWORD=sample
-     - MYSQL_DATABASE=wordpress
-
-  ```
-  Y para ejecutarlo, estando en el mismo directorio donde está el fichero **ejemplo.yml**, haremos lo siguiente:
-
-  ```shell
-  $ docker-compose up
-  ```
-  Y para comprobar que todo ha ido bien, abriremos la url http://127.0.0.3:8080 para aceder a la página de Wordpress.
 
 # CheatSheets
 ### Docker General Commands
