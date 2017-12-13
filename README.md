@@ -23,10 +23,6 @@ Mis notas sobre Docker.
     * **[Good Use case for tmpfs Mounts](#good-use-case-for-tmpfs-mounts)**
     * **[Ejemplo Práctico](#ejemplo-práctico)**
 * **[Ciclo de vida de un contenedor (Create/Start/Stop/Kill/Remove)](#ciclo-de-vida-de-un-contenedor-createstartstopkillremove)**
-* **[Limpieza](#limpieza)**
-  * **[Containers](#containers-1)**
-  * **[Images](#images-1)**
-  * **[Volumes](#volumes)**
 * **[Dockerfiles](#dockerfiles)**
   * **[Cómo Empezar](#cómo-empezar)**
   * **[La Aplicación](#la-aplicación)**
@@ -38,6 +34,10 @@ Mis notas sobre Docker.
   * **[Network Containers](#network-containers)**
     * **[1. Crear nuestro propio "Bridge Network"](#1-crear-nuestro-propio-bridge-network)**
     * **[2. Add Containers to a Network](#2-add-containers-to-a-network)**
+* **[Limpieza](#limpieza)**
+  * **[Containers](#containers-1)**
+  * **[Images](#images-1)**
+  * **[Volumes](#volumes)**
 * **[CheatSheets](#cheatsheets)**
   * **[Docker General Commands](#docker-general-cheatsheet)**
   * **[Dockerfile Commands](#dockerfile-commands)**
@@ -611,49 +611,6 @@ o destruirse:
 $ docker rm a842945e2414
 ```
 
-# Limpieza
-### Containers:
-* Borrar container:
-```shell
-$ docker rm <container_ID>
-```
-
-* Borrar container y sus volumenes asociados:
-```shell
-$ docker rm -v <container_ID>
-```
-
-* Borrar TODOS los containers:
-```shell
-$ docker rm $(docker ps -a -q)
-```
-
-### Images:
-* Borrar imágenes:
-```shell
-$ docker rmi <container_ID>
-```
-
-* Borrar TODAS las imáganes:
-```shell
-$ docker rmi $(docker images -q)
-```
-* Listar imágenes <none> "colgadas":
-```shell
-$ docker images -f "dangling=true"
-```
-
-* Borrar imágenes <none> "colgadas":
-```shell
-$ docker rmi $(docker images -f "dangling=true" -q)
-```
-
-### Volumes:
-* Borrar TODOS los "volume" que no se estén utilizando:
-```shell
-$ docker volume rm $(docker volumels -q)
-```
-
 # Dockerfiles
 
 * **Problema:**
@@ -1034,6 +991,49 @@ $ docker run -d --name web training/webapp python app.py
 <p align="center">
   <img src="images/bridge2.png">
 </p>
+
+# Limpieza
+### Containers:
+* Borrar container:
+```shell
+$ docker rm <container_ID>
+```
+
+* Borrar container y sus volumenes asociados:
+```shell
+$ docker rm -v <container_ID>
+```
+
+* Borrar TODOS los containers:
+```shell
+$ docker rm $(docker ps -a -q)
+```
+
+### Images:
+* Borrar imágenes:
+```shell
+$ docker rmi <container_ID>
+```
+
+* Borrar TODAS las imáganes:
+```shell
+$ docker rmi $(docker images -q)
+```
+* Listar imágenes <none> "colgadas":
+```shell
+$ docker images -f "dangling=true"
+```
+
+* Borrar imágenes <none> "colgadas":
+```shell
+$ docker rmi $(docker images -f "dangling=true" -q)
+```
+
+### Volumes:
+* Borrar TODOS los "volume" que no se estén utilizando:
+```shell
+$ docker volume rm $(docker volumels -q)
+```
 
 # CheatSheets
 ### Docker General Commands
