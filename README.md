@@ -814,7 +814,11 @@ Cuando queramos "linkar" dos o más contenedores tendremos que establecer su rel
 **Referencias:**
 * [Docker Stacks and why we need them](https://blog.nimbleci.com/2016/09/14/docker-stacks-and-why-we-need-them/ "Docker Stacks and why we need them")
 
+Conceptually, `docker-compose` and `docker stack` files serve the same purpose - **deployment and configuration of your containers on docker engines**.
 
+* **Docker-compose** tool was created first and its purpose is "for defining and running multi-container Docker applications" on a single docker engine.
+
+* **Docker Stack** is used in **Docker Swarm** (Docker's orchestration and scheduling tool) and, therefore, it has additional configuration parameters (i.e. replicas, deploy, roles) that are not needed on a single docker engine. **This command can be invoked from a docker swarm manager only**. Stacks are very similar to docker-compose except they define services while docker-compose defines containers. Stacks allow us to tell the docker engine the definition of the services that should be running, so the engine can monitor and orchestrate the services.
 
 # Networking
 
@@ -822,6 +826,8 @@ Cuando queramos "linkar" dos o más contenedores tendremos que establecer su rel
 
   **Referencias:**
   * [Docker Networking Hands-on Lab](http://training.play-with-docker.com/docker-networking-hol/ "Docker Networking Hands-on Lab")
+
+
 
 When you install Docker, it creates **three networks** automatically: `bridge`, `none` and `host`. You can list these networks using the `docker network ls` command:
 
