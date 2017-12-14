@@ -805,9 +805,9 @@ Cuando queramos "linkar" dos o más contenedores tendremos que establecer su rel
 
   Para parar tenemos dos opciones:
 
-  'docker-compose down' borra los contenedores, la red por defecto pero mantiene la base de datos de Wordpress.
+  * `docker-compose down` borra los contenedores, la red por defecto pero mantiene la base de datos de Wordpress.
 
-  'docker-compose down --volumes' borra los contenedores, la red por defecto y las bases de datos.
+  * `docker-compose down --volumes` borra los contenedores, la red por defecto y las bases de datos.
 
 
 # Networking
