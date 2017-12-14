@@ -366,6 +366,9 @@ Una vez subido, podremos ver en la Web de [Docker Hub](https://hub.docker.com/ "
 
 # Volumes
 
+Referencias:
+* [Docker Volumes Tutorial](http://containertutorials.com/volumes.html "Docker Volumes Tutorial")
+
 It is possible to store data within the writable layer of a container, but there are some downsides:
 
 * The data won’t persist when that container is no longer running, and it can be difficult to get the data out of the container if another process needs it.
