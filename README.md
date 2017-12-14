@@ -764,30 +764,51 @@ Referencia:
 
 Cuando queramos "linkar" dos o más contenedores tendremos que establecer su relación en un fichero YAML. A continuación se muestra un ejemplo de un fichero que "linka" un container "Web" (Wordpress) y uno de base de datos "MySQL":
 
-* Contenido del fichero **ejemplo.yml**:
+* Contenido del fichero **docker-compose.yml**:
 
   ```YAML
-  web:
-     image: wordpress
-     links:
-       - mysql
-     environment:
-       - WORDPRESS_DB_PASSWORD=sample
-     ports:
-       - "127.0.0.3:8080:80"
-  mysql:
-  image: mysql:latest
-  environment:
-     - MYSQL_ROOT_PASSWORD=sample
-     - MYSQL_DATABASE=wordpress
+  version: '3'
+
+  services:
+     db:
+       image: mysql:5.7
+       volumes:
+         - db_data:/var/lib/mysql
+       restart: always
+       environment:
+         MYSQL_ROOT_PASSWORD: somewordpress
+         MYSQL_DATABASE: wordpress
+         MYSQL_USER: wordpress
+         MYSQL_PASSWORD: wordpress
+
+     wordpress:
+       depends_on:
+         - db
+       image: wordpress:latest
+       ports:
+         - "8000:80"
+       restart: always
+       environment:
+         WORDPRESS_DB_HOST: db:3306
+         WORDPRESS_DB_USER: wordpress
+         WORDPRESS_DB_PASSWORD: wordpress
+  volumes:
+      db_data:
 
   ```
-  Y para ejecutarlo, estando en el mismo directorio donde está el fichero **ejemplo.yml**, haremos lo siguiente:
+  Y para ejecutarlo, estando en el mismo directorio donde está el fichero **docker-compose.yml**, haremos lo siguiente:
 
   ```shell
   $ docker-compose up
   ```
-  Y para comprobar que todo ha ido bien, abriremos la url http://127.0.0.3:8080 para aceder a la página de Wordpress.
+  Y para comprobar que todo ha ido bien, abriremos la url http://localhost:8000 para acceder a la página de Wordpress.
+
+  Para parar tenemos dos opciones:
+
+  'docker-compose down' borra los contenedores, la red por defecto pero mantiene la base de datos de Wordpress.
+
+  'docker-compose down --volumes' borra los contenedores, la red por defecto y las bases de datos.
+
 
 # Networking
 
