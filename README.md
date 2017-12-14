@@ -18,10 +18,10 @@ Mis notas sobre Docker.
     * **[Volumes](#volumes)**
     * **[Bind Mounts](#bind-mounts)**
     * **[tmpfs Mounts](#tmpgs-mounts)**
-    * **[Good Use case for Volumes](#good-use-case-for-volumes)**
-    * **[Good Use case for Bind Mounts](#good-use-case-for-bind-mounts)**
-    * **[Good Use case for tmpfs Mounts](#good-use-case-for-tmpfs-mounts)**
-    * **[Ejemplo Práctico](#ejemplo-práctico)**
+  * **[Good Use case for Volumes](#good-use-case-for-volumes)**
+  * **[Good Use case for Bind Mounts](#good-use-case-for-bind-mounts)**
+  * **[Good Use case for tmpfs Mounts](#good-use-case-for-tmpfs-mounts)**
+  * **[Ejemplo Práctico](#ejemplo-práctico)**
 * **[Ciclo de vida de un contenedor (Create/Start/Stop/Kill/Remove)](#ciclo-de-vida-de-un-contenedor-createstartstopkillremove)**
 * **[Dockerfiles](#dockerfiles)**
   * **[Cómo Empezar](#cómo-empezar)**
@@ -741,6 +741,26 @@ Hemos utilizado la opción "-d" para arrancarlo en "detached mode".
 Cuando estamos diseñando una "aplicación distribuida", a cada una de las piezas se le conoce como "service". Por ejemplo, si pensamos en una aplicación de "Video Sharing site", tendremos que tener por un lado un servicio que nos permita almacenar en una base de datos tod el contenido multimedia, por otra parte tendremos un servicio para realizar el "transcoding" en background cada vez que un usuario suba un vídeo, tambien tendremos un servicio para la parte front-end, etc.
 
 Llamamos "services" a los "containers" que pongamos en producción. Un servicio se compone de una sola imagen, con todo lo necesario para que ésta proporcione la funciones para lo que ha sido creada. En Docker, la manera en que definiremos dichas "images" es con "Docker Compose", escribiendo lo que se conocen como ficheros **docker-compose.yml**.
+
+Para trabajar con Compose seguiremos los siguietes pasos:
+
+1. Define your app’s environment with a `Dockerfile` so it can be reproduced anywhere.
+
+2. Define the services that make up your app in `docker-compose.yml` so they can be run together in an isolated environment.
+
+3. Lastly, run `docker-compose up` and Compose will start and run your entire app.
+
+Compose tiene comandos para poder gestionar el ciclo de vida completo de nuestra aplicación.
+
+* Start, stop, and rebuild services
+* View the status of running services
+* Stream the log output of running services
+* Run a one-off command on a service
+
+Referencia:
+  * [Compose file version 3 reference](https://docs.docker.com/compose/compose-file/ "Compose file version 3 reference")
+
+### Ejemplo Práctico: Wordpress + MySQL
 
 Cuando queramos "linkar" dos o más contenedores tendremos que establecer su relación en un fichero YAML. A continuación se muestra un ejemplo de un fichero que "linka" un container "Web" (Wordpress) y uno de base de datos "MySQL":
 
