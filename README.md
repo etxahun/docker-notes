@@ -809,6 +809,12 @@ Cuando queramos "linkar" dos o más contenedores tendremos que establecer su rel
 
   * `docker-compose down --volumes` borra los contenedores, la red por defecto y las bases de datos.
 
+# Docker Stack
+
+**Referencias:**
+* [Docker Stacks and why we need them](https://blog.nimbleci.com/2016/09/14/docker-stacks-and-why-we-need-them/ "Docker Stacks and why we need them")
+
+
 
 # Networking
 
