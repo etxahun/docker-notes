@@ -13,9 +13,9 @@ Mis notas sobre Docker.
   * **[Ports in Containers](#ports-in-containers)**
 * **[Images](#images)**
   * **[Crear nuestras propias imágenes](#crear-nuestras-propias-images)**
-* **[Volumes](#volumes-1)**
+* **[Volumes](#volumes)**
   * **[Choose the right type of mount](#choose-the-right-type-of-mount)**
-    * **[Volumes](#volumes)**
+    * **[Volumes](#volumes-1)**
     * **[Bind Mounts](#bind-mounts)**
     * **[tmpfs Mounts](#tmpgs-mounts)**
   * **[Good Use case for Volumes](#good-use-case-for-volumes)**
