@@ -249,7 +249,6 @@ $ docker run -P nginx
 $ docker port <container_name>
 ```
 
-
 # Images
 
 * Ver listado de imagenes:
@@ -366,7 +365,7 @@ Una vez subido, podremos ver en la Web de [Docker Hub](https://hub.docker.com/ "
 
 # Volumes
 
-Referencias:
+**Referencias:**
 * [Docker Volumes Tutorial](http://containertutorials.com/volumes.html "Docker Volumes Tutorial")
 
 It is possible to store data within the writable layer of a container, but there are some downsides:
