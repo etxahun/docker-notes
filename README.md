@@ -39,7 +39,7 @@ Mis notas sobre Docker.
   * **[Images](#images-1)**
   * **[Volumes](#volumes)**
 * **[CheatSheets](#cheatsheets)**
-  * **[Docker General Commands](#docker-general-cheatsheet)**
+  * **[Docker General Commands](#docker-general-commands)**
   * **[Dockerfile Commands](#dockerfile-commands)**
 
 # Introducción
